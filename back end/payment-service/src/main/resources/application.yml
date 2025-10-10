@@ -3,14 +3,23 @@ spring:
     name: payment-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/db_payment_service?useSSL=false&allowPublicKeyRetrieval=true&serverTimeZone=UTC&autoReconnect=true
+    url: jdbc:mysql://localhost:3306/db_payment_service?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&autoReconnect=true
     username: root
     password: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
       ddl-auto: validate
     show-sql: true
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
 
 server:
   port: 8085
