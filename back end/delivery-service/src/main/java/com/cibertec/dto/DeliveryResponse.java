@@ -21,8 +21,6 @@ public record DeliveryResponse(
 
         String driverPhone,
 
-        LocalDateTime eta,
-
         LocalDateTime deliveredAt,
 
         String instructions,

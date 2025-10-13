@@ -2,7 +2,7 @@ spring:
   application:
     name: users-service
   datasource:
-    url: jdbc:mysql://localhost:3306/db_user_service?useSSL=false&allowPublicKeyRetrieval=true&serverTimeZone=UTC&autoReconnect=true
+    url: jdbc:mysql://localhost:3306/db_pizzeria_gula_user_service?useSSL=false&allowPublicKeyRetrieval=true&serverTimeZone=UTC&autoReconnect=true
     username: root
     password: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver

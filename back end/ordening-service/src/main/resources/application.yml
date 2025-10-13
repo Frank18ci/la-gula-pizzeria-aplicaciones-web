@@ -3,7 +3,7 @@ spring:
     name: ordening-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/db_ordening_service?useSSL=false&allowPublicKeyRetrieval=true&serverTimeZone=UTC&autoReconnect=true
+    url: jdbc:mysql://localhost:3306/db_pizzeria_gula_ordening_service?useSSL=false&allowPublicKeyRetrieval=true&serverTimeZone=UTC&autoReconnect=true
     username: root
     password: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver
