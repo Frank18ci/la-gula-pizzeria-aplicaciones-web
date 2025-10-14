@@ -26,7 +26,7 @@ public class Order {
     private BigDecimal totalAmount = BigDecimal.ZERO;
 
     @Column(name = "created_at", nullable = false, updatable = false,
-            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
     private LocalDateTime createdAt;
 
     // Relación OneToMany con Payments
