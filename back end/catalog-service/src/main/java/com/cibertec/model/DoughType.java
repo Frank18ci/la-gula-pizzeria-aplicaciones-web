@@ -1,0 +1,34 @@
+package com.cibertec.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity
+@Table(name = "dough_types")
+public class DoughType {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(length = 50, nullable = false, unique = true)
+    private String name;
+    @Column(nullable = false)
+    private Boolean isGlutenFree = false;
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal extraPrice = BigDecimal.ZERO;
+    @Column(nullable = false)
+    private Boolean active = true;
+    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
+    private LocalDateTime createdAt;
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP", insertable = false)
+    private LocalDateTime updatedAt;
+}

@@ -1,0 +1,63 @@
+package com.cibertec.service.impl;
+
+import com.cibertec.dto.PizzaRequest;
+import com.cibertec.dto.PizzaResponse;
+import com.cibertec.exception.ResourceNotFound;
+import com.cibertec.model.Pizza;
+import com.cibertec.repository.PizzaRepository;
+import com.cibertec.repository.ToppingRepository;
+import com.cibertec.service.PizzaService;
+import com.cibertec.util.PizzaMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class PizzaServiceImpl implements PizzaService {
+    private final PizzaRepository pizzaRepository;
+    private final ToppingRepository toppingRepository;
+    private final PizzaMapper pizzaMapper;
+    @Override
+    public List<PizzaResponse> getPizzas() {
+        return pizzaMapper.toDtoList(pizzaRepository.findAll());
+    }
+
+    @Override
+    public PizzaResponse getPizzaById(Long id) {
+        return pizzaMapper.toDto(pizzaRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFound("Pizza not found with id: " + id)
+        ));
+    }
+
+    @Override
+    public PizzaResponse createPizza(PizzaRequest pizzaRequest) {
+        return pizzaMapper.toDto(pizzaRepository.save(pizzaMapper.toEntity(pizzaRequest, toppingRepository)));
+    }
+
+    @Override
+    public PizzaResponse updatePizza(Long id, PizzaRequest pizzaRequest) {
+        Pizza pizzaFound = pizzaRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFound("Pizza not found with id: " + id)
+        );
+        pizzaFound.setName(pizzaRequest.name());
+        pizzaFound.setDescription(pizzaRequest.description());
+        pizzaFound.setBasePrice(pizzaRequest.basePrice());
+        pizzaFound.setActive(pizzaRequest.active());
+        if(pizzaRequest.toppingIds() != null) {
+            pizzaFound.setToppings(pizzaMapper.map(pizzaRequest.toppingIds(), toppingRepository));
+        } else {
+            pizzaFound.getToppings().clear();
+        }
+        return pizzaMapper.toDto(pizzaRepository.save(pizzaFound));
+    }
+
+    @Override
+    public void deletePizza(Long id) {
+        Pizza pizzaFound = pizzaRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFound("Pizza not found with id: " + id)
+        );
+        pizzaRepository.delete(pizzaFound);
+    }
+}
