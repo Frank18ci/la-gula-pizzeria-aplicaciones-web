@@ -11,9 +11,9 @@ public class SwaggerConfig {
     OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API de Servicio de ordenes")
+                        .title("API de Servicio de clientes")
                         .version("1.0.0")
-                        .description("API para gestionar ordenes en la plataforma RCF")
+                        .description("API para gestionar clientes en la pizzeria gula")
                 );
     }
 
