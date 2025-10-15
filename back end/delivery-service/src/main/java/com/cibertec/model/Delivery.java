@@ -49,8 +49,6 @@ public class Delivery {
     @Column(name = "driver_phone")
     private String driverPhone;
 
-    private LocalDateTime eta;
-
     @Column(name = "delivered_at")
     private LocalDateTime deliveredAt;
 

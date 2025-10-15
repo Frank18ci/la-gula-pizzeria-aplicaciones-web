@@ -3,7 +3,7 @@ spring:
     name: payment-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/db_payment_service?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&autoReconnect=true
+    url: jdbc:mysql://localhost:3306/db_pizzeria_gula_payment_service?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&autoReconnect=true
     username: root
     password: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver

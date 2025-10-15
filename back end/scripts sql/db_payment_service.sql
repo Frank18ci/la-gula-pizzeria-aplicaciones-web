@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS db_pizzeria_gula_service;
+DROP DATABASE IF EXISTS db_pizzeria_gula_payment_service;
 CREATE DATABASE db_pizzeria_gula_payment_service;
 USE db_pizzeria_gula_payment_service;
 
