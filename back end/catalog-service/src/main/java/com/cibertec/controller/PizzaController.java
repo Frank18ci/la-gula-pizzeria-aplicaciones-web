@@ -2,6 +2,7 @@ package com.cibertec.controller;
 
 import com.cibertec.dto.PizzaRequest;
 import com.cibertec.service.PizzaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +22,11 @@ public class PizzaController {
         return ResponseEntity.ok(pizzaService.getPizzaById(id));
     }
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody PizzaRequest pizzaRequest) {
+    public ResponseEntity<?> create(@RequestBody @Valid PizzaRequest pizzaRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(pizzaService.createPizza(pizzaRequest));
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody PizzaRequest pizzaRequest) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PizzaRequest pizzaRequest) {
         return ResponseEntity.ok(pizzaService.updatePizza(id, pizzaRequest));
     }
     @DeleteMapping("/{id}")

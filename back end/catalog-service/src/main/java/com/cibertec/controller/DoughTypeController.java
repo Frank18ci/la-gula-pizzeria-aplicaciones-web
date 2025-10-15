@@ -2,6 +2,7 @@ package com.cibertec.controller;
 
 import com.cibertec.dto.DoughTypeRequest;
 import com.cibertec.service.DoughTypeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +22,11 @@ public class DoughTypeController {
         return ResponseEntity.ok(doughTypeService.getDoughTypeById(id));
     }
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody DoughTypeRequest doughTypeRequest) {
+    public ResponseEntity<?> create(@RequestBody @Valid DoughTypeRequest doughTypeRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(doughTypeService.createDoughType(doughTypeRequest));
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody DoughTypeRequest doughTypeRequest) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid DoughTypeRequest doughTypeRequest) {
         return ResponseEntity.ok(doughTypeService.updateDoughType(id, doughTypeRequest));
     }
     @DeleteMapping("/{id}")
