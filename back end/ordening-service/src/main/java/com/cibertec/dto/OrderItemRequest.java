@@ -27,6 +27,8 @@ public record OrderItemRequest(
 
     @NotNull(message = "Line total is required")
     BigDecimal lineTotal,
+    @NotNull(message = "Order ID is required")
+    Long orderId,
 
     String note
 

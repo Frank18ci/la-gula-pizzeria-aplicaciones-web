@@ -34,12 +34,12 @@ public class OrderItemTopping {
     private String action;
 
     @Column(nullable = false)
-    private Integer quantity;
+    private Integer quantity = 1;
 
     @Column(name = "price_delta", nullable = false)
-    private BigDecimal priceDelta;
+    private BigDecimal priceDelta = BigDecimal.ZERO;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
 
      // Relación con OrderItem

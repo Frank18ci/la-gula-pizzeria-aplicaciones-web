@@ -18,5 +18,7 @@ public record OrderItemToppingRequest(
     Integer quantity,
 
     @NotNull(message = "Price delta is required")
-    BigDecimal priceDelta
+    BigDecimal priceDelta,
+    @NotNull(message = "Order item ID is required")
+    Long orderItemId
 ) {}

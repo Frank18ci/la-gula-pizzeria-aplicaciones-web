@@ -2,7 +2,6 @@ package com.cibertec.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import lombok.Builder;
 
 @Builder
@@ -28,5 +27,5 @@ public record OrderItemResponse(
 
     LocalDateTime updatedAt,
     
-    List<OrderItemToppingResponse> toppings
+    OrderResponse order
 ) {}

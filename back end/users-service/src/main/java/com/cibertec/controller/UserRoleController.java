@@ -1,6 +1,5 @@
 package com.cibertec.controller;
 
-import com.cibertec.dto.UserRequest;
 import com.cibertec.dto.UserRoleRequest;
 import com.cibertec.service.UserRoleService;
 import jakarta.validation.Valid;

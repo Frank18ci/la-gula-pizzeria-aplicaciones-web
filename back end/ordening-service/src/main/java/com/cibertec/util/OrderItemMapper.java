@@ -9,10 +9,10 @@ import com.cibertec.dto.OrderItemRequest;
 import com.cibertec.dto.OrderItemResponse;
 import com.cibertec.model.OrderItem;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {OrderMapper.class})
 public interface OrderItemMapper {
-     
-  
+    @Mapping(source = "orderId", target = "order.id")
+    @Mapping(target = "id", ignore = true)
     OrderItem toEntity(OrderItemRequest orderItemRequest);
 
     OrderItemResponse toDto(OrderItem orderItem);
