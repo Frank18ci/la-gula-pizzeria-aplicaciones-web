@@ -2,6 +2,9 @@ package com.cibertec.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import com.cibertec.model.OrderItem;
+import com.cibertec.model.OrderItemTopping;
 import lombok.Builder;
 
 @Builder
@@ -17,5 +20,6 @@ public record OrderItemToppingResponse(
 
     BigDecimal priceDelta,
     
-    LocalDateTime createdAt
+    LocalDateTime createdAt,
+    OrderItemResponse orderItem
 ) {}

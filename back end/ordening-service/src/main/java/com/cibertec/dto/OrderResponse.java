@@ -40,8 +40,6 @@ public  record OrderResponse (
 
         LocalDateTime placedAt,
 
-        LocalDateTime updatedAt,
-        
-        List<OrderItemResponse> orderItems
+        LocalDateTime updatedAt
     
 ){}

@@ -16,7 +16,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/order_item_toppings")
+@RequestMapping("/order-item-toppings")
 @RequiredArgsConstructor
 public class OrderItemToppingController {
 
@@ -29,7 +29,7 @@ public class OrderItemToppingController {
         }
 
         @GetMapping("/{id}")
-        public ResponseEntity<?> findById(Long id) {
+        public ResponseEntity<?> findById(@PathVariable Long id) {
             return ResponseEntity.ok(orderItemToppingService.getOrderItemToppingById(id));
         }
 

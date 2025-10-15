@@ -8,13 +8,7 @@ import com.cibertec.enums.DeliveryMethod;
 import com.cibertec.enums.OrderStatus;
 import com.cibertec.enums.PaymentStatus;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,10 +35,10 @@ public class Order {
 
     @Column(name = "address_id")
     private Long addressId;
-
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private OrderStatus status;
-
+    private OrderStatus status = OrderStatus.pending;
+    @Enumerated(EnumType.STRING)
     @Column(name = "delivery_method", nullable = false, length = 30)
     private DeliveryMethod deliveryMethod;
 
@@ -52,27 +46,27 @@ public class Order {
     private String notes;
 
     @Column(nullable = false)
-    private BigDecimal subtotal;
+    private BigDecimal subtotal = BigDecimal.ZERO;
 
     @Column(nullable = false)
-    private BigDecimal tax;
+    private BigDecimal tax = BigDecimal.ZERO;
 
     @Column(name = "delivery_fee", nullable = false)
-    private BigDecimal deliveryFee;
+    private BigDecimal deliveryFee = BigDecimal.ZERO;
 
     @Column(name = "discount_total", nullable = false)
-    private BigDecimal discountTotal;
+    private BigDecimal discountTotal = BigDecimal.ZERO;
 
     @Column(nullable = false)
-    private BigDecimal total;
-
+    private BigDecimal total = BigDecimal.ZERO;
+    @Enumerated(EnumType.STRING)
     @Column(name = "payment_status", nullable = false, length = 30)
-    private PaymentStatus paymentStatus;
+    private PaymentStatus paymentStatus = PaymentStatus.unpaid;
 
     @Column(name = "placed_at", nullable = false)
     private LocalDateTime placedAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", insertable = false, nullable = false)
     private LocalDateTime updatedAt;
 
 
