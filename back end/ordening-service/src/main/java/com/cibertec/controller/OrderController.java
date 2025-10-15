@@ -1,6 +1,5 @@
 package com.cibertec.controller;
 
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,36 +10,43 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cibertec.dto.PaymentRequest;
-import com.cibertec.service.PaymentService;
+import com.cibertec.dto.OrderRequest;
+import com.cibertec.service.OrderService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/payments")
+@RequestMapping("/orders")
 @RequiredArgsConstructor
-public class PaymentController {
-    private final PaymentService paymentService;
-    @GetMapping
+public class OrderController {
+
+    private final OrderService orderService;
+    
+      @GetMapping
     public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok(paymentService.getAllPayments());
+        return ResponseEntity.ok(orderService.getAllOrders());
     }
-    @GetMapping("/{id}")
+
+     @GetMapping("/{id}")
     public ResponseEntity<?> findById(Long id) {
-        return ResponseEntity.ok(paymentService.getPaymentById(id));
+        return ResponseEntity.ok(orderService.getOrderById(id));
     }
-    @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid PaymentRequest paymentRequest) {
-        return ResponseEntity.ok(paymentService.createPayment(paymentRequest));
+
+     @PostMapping
+    public ResponseEntity<?> create(@RequestBody @Valid OrderRequest orderRequest) {
+        return ResponseEntity.ok(orderService.createOrder(orderRequest));
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PaymentRequest paymentRequest) {
-        return ResponseEntity.ok(paymentService.updatePayment(id, paymentRequest));
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid OrderRequest orderRequest) {
+        return ResponseEntity.ok(orderService.updateOrder(id, orderRequest));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        paymentService.deletePayment(id);
+        orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();
     }
+
+
+
 }
