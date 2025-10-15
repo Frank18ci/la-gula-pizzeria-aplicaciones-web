@@ -2,6 +2,7 @@ package com.cibertec.controller;
 
 import com.cibertec.dto.SizeRequest;
 import com.cibertec.service.SizeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +22,11 @@ public class SizeController {
         return ResponseEntity.ok(sizeService.getSizeById(id));
     }
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody SizeRequest sizeRequest) {
+    public ResponseEntity<?> create(@RequestBody @Valid SizeRequest sizeRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(sizeService.createSize(sizeRequest));
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody SizeRequest sizeRequest) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid SizeRequest sizeRequest) {
         return ResponseEntity.ok(sizeService.updateSize(id, sizeRequest));
     }
     @DeleteMapping("/{id}")

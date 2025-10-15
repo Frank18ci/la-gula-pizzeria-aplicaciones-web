@@ -2,6 +2,7 @@ package com.cibertec.controller;
 
 import com.cibertec.dto.ToppingRequest;
 import com.cibertec.service.ToppingService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +22,11 @@ public class ToppingController {
         return ResponseEntity.ok(toppingService.getToppingById(id));
     }
     @PostMapping
-    public ResponseEntity<?> createTopping(@RequestBody ToppingRequest toppingRequest) {
+    public ResponseEntity<?> createTopping(@RequestBody @Valid ToppingRequest toppingRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(toppingService.createTopping(toppingRequest));
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateTopping(@PathVariable Long id, @RequestBody ToppingRequest toppingRequest) {
+    public ResponseEntity<?> updateTopping(@PathVariable Long id, @RequestBody @Valid ToppingRequest toppingRequest) {
         return ResponseEntity.ok(toppingService.updateTopping(id, toppingRequest));
     }
     @DeleteMapping("/{id}")
