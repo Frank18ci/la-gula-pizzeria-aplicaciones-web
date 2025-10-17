@@ -12,9 +12,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-public record  OrderRequest (
-    
-      @NotBlank(message = "Order number is required")
+public record OrderRequest(
+
+        @NotBlank(message = "Order number is required")
         String orderNumber,
 
         Long customerId,
@@ -48,4 +48,5 @@ public record  OrderRequest (
         PaymentStatus paymentStatus,
 
         LocalDateTime placedAt
-){}
+) {
+}

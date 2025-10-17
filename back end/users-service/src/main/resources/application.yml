@@ -1,6 +1,13 @@
 spring:
   application:
     name: users-service
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        enabled: true
+        register: true
   datasource:
     url: jdbc:mysql://localhost:3306/db_pizzeria_gula_user_service?useSSL=false&allowPublicKeyRetrieval=true&serverTimeZone=UTC&autoReconnect=true
     username: root

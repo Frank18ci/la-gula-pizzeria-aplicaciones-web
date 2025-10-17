@@ -1,7 +1,13 @@
 spring:
   application:
     name: payment-service
-
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        enabled: true
+        register: true
   datasource:
     url: jdbc:mysql://localhost:3306/db_pizzeria_gula_payment_service?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&autoReconnect=true
     username: root
