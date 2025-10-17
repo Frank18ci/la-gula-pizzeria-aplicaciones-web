@@ -5,28 +5,28 @@ import { LoginPage } from './pages/login-page/login-page';
 import { RegisterPage } from './pages/register-page/register-page';
 
 const routes: Routes = [
-{
-  path: '',
-  component: LayoutPage,
-  children: [
-    {
-      path: 'login',
-      component: LoginPage
-    },
-    {
-      path: 'register',
-      component: RegisterPage
-    },
-    {
-      path: '**',
-      redirectTo: 'login'
-    }
-  ]
-},
-{
-  path: '**',
-  redirectTo: 'login'
-}
+  {
+    path: '',
+    component: LayoutPage,
+    children: [
+      {
+        path: 'login',
+        component: LoginPage
+      },
+      {
+        path: 'register',
+        component: RegisterPage
+      },
+      {
+        path: '**',
+        redirectTo: 'login'
+      }
+    ]
+  },
+  {
+    path: '**',
+    redirectTo: 'login'
+  }
 ];
 
 @NgModule({
