@@ -22,7 +22,7 @@ public class Customer {
     @Column(name = "user_id", nullable = false, unique = true)
     private Long userId;
     @Column(name = "loyalty_points", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private Long loyaltyPoints;
+    private Integer loyaltyPoints;
     @Column(name = "birth_date")
     private LocalDateTime birthDate;
     @Column(length = 255)

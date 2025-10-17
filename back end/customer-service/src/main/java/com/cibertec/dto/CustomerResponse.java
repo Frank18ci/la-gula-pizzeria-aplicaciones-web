@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public record CustomerResponse(
         Long id,
         Long userId,
-        Long loyaltyPoints,
+        Integer loyaltyPoints,
         LocalDateTime birthDate,
         String notes,
         LocalDateTime createdAt,
