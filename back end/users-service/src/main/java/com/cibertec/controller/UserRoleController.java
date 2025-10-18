@@ -31,4 +31,8 @@ public class UserRoleController {
         userRoleService.deleteUserRole(idUser, idRole);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/user/{idUser}")
+    public ResponseEntity<?> getUserRolesByUserId(@PathVariable Long idUser) {
+        return ResponseEntity.ok(userRoleService.getUserRolesByUserId(idUser));
+    }
 }

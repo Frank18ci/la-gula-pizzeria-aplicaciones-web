@@ -1,25 +1,25 @@
-package com.cibertec.security.util;
-
-import java.security.Key;
-import java.util.Date;
-import java.util.function.Function;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+package com.cibertec.gatewayservice.security.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.util.Date;
+import java.util.function.Function;
 
 @Component
 @Slf4j
 public class JwtUtils {
 
-    @Value("${jwt.secret.key}")
-    private String secretKey;
+
+    public static final String SECRET_KEY = "claveSuperSeguraParaJWTyOAuth2_123456789";
+
     @Value("${jwt.time.expiration}")
     private Long timeExpiration;
 
@@ -63,7 +63,6 @@ public class JwtUtils {
                 .getBody();
     }
     public Key getSignaturekey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
 }

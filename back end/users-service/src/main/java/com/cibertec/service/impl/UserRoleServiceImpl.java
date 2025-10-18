@@ -43,4 +43,9 @@ public class UserRoleServiceImpl implements UserRoleService {
         );
         userRoleRepository.delete(userRoleFound);
     }
+
+    @Override
+    public List<UserRoleResponse> getUserRolesByUserId(Long idUser) {
+        return userRoleMapper.toDtoList(userRoleRepository.findByUserId(idUser));
+    }
 }
