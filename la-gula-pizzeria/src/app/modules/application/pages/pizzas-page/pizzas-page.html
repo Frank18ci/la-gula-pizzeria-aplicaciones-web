@@ -1,0 +1,8 @@
+<p>pizzas-page works!</p>
+@for(pizza of pizzas; track pizza.id) {
+    <div>
+        <h2>{{pizza.id}}</h2>
+        <p>{{pizza.description}}</p>
+        <p>Price: ${{pizza.basePrice}}</p>
+    </div>
+}
