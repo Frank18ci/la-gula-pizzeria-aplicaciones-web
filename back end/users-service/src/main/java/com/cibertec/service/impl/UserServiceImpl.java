@@ -54,4 +54,11 @@ public class UserServiceImpl implements UserService {
         );
         userRepository.delete(userFound);
     }
+
+    @Override
+    public UserResponse getUserByEmail(String email) {
+        return userMapper.toDto(userRepository.findByEmail(email).orElseThrow(
+                () -> new ResourceNotFound("User not found with email: " + email)
+        ));
+    }
 }

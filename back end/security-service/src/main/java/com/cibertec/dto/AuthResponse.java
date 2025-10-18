@@ -1,4 +1,13 @@
 package com.cibertec.dto;
 
-public class AuthResponse {
+import lombok.Builder;
+
+@Builder
+public record AuthResponse(
+        String token,
+        String type,
+        Long id,
+        String email,
+        String fullName
+) {
 }

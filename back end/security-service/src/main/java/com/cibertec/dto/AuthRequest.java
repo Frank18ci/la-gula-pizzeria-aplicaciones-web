@@ -1,4 +1,10 @@
 package com.cibertec.dto;
 
-public class AuthRequest {
+import lombok.Builder;
+
+@Builder
+public record AuthRequest(
+        String username,
+        String password
+) {
 }

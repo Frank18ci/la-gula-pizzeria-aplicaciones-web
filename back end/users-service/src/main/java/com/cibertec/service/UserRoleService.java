@@ -10,4 +10,6 @@ public interface UserRoleService {
     UserRoleResponse getUserRoleById(Long userId, Long roleId);
     UserRoleResponse createUserRole(UserRoleRequest userRoleRequest);
     void deleteUserRole(Long userId, Long roleId);
+
+    List<UserRoleResponse> getUserRolesByUserId(Long idUser);
 }

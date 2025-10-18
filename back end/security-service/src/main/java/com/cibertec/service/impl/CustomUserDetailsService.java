@@ -1,4 +1,4 @@
-package com.cibertec.service;
+package com.cibertec.service.impl;
 
 import com.cibertec.client.UserClient;
 import com.cibertec.client.dto.UserResponse;

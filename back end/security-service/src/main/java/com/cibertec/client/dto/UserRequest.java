@@ -1,4 +1,4 @@
-package com.cibertec.dto;
+package com.cibertec.client.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
