@@ -1,1 +1,24 @@
-<p>login-page works!</p>
+<div class="h-screen flex items-center justify-center bg-gray-50">
+    <div class="">
+        <form class="bg-white p-4 rounded shadow-sm md:min-w-md">
+            <h2 class="text-center text-xl mb-4 font-semibold">Iniciar sesión</h2>
+
+            <div class="space-y-2">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="border p-2 w-full rounded-lg border-gray-400 text-gray-400 outline-none focus:border-blue-500" placeholder="Ingresa tu correo" required>
+            </div>
+
+            <div class="space-y-2 mt-4">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" class="border p-2 w-full rounded-lg border-gray-400 text-gray-400 outline-none focus:border-blue-500" placeholder="Ingresa tu contraseña" required>
+            </div>
+
+            <div class="mt-6">
+                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">Iniciar sesión</button>
+            </div>
+            <div>
+                <p class="text-center text-sm text-gray-600 mt-4">¿No tienes una cuenta? <a routerLink="/auth/register" class="text-blue-500 hover:underline">Regístrate</a></p>
+            </div>
+        </form>
+    </div>
+</div>
