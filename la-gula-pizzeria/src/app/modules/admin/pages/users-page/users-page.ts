@@ -9,6 +9,7 @@ import { UserService } from '../../../../shared/services/user/user-service';
 import { RoleService } from '../../../../shared/services/user/role-service';
 import { UserRoleService } from '../../../../shared/services/user/user-role-service';
 import UserRoleResponse from '../../../../shared/model/user/response/userRoleResponse.model';
+import { UserDialog } from '../../components/dialogs/user-dialog/user-dialog';
 
 @Component({
   selector: 'app-users-page',
@@ -62,7 +63,19 @@ export class UsersPage implements OnInit, AfterViewInit {
   }  
 
   openDialog(user?: UserResponse): void {
-    // Implementation for opening user dialog goes here
+    let userDialogData: any = {};
+    if (user) {
+      userDialogData = { ...user };
+    }
+    const dialogRef = this.dialog.open(UserDialog, {
+      width: '700px',
+      data: user ? userDialogData : null
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadUsers();
+      }
+    });
   }
   viewUserDetails(user: UserResponse): void {
     // Implementation for viewing user details goes here
