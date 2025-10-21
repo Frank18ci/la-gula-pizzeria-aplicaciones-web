@@ -40,7 +40,7 @@
 
                 <ng-container matColumnDef="Precio base">
                     <th mat-header-cell *matHeaderCellDef> Precio base </th>
-                    <td mat-cell *matCellDef="let pizza"> {{ pizza.basePrice | currency }} </td>
+                    <td mat-cell *matCellDef="let pizza"> {{ pizza.basePrice | currency:'PEN':'symbol-narrow' }} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="Complementos">
