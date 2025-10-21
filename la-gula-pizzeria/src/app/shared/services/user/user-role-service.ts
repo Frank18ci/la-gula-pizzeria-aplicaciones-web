@@ -8,7 +8,7 @@ import UserRoleResponse from '../../model/user/response/userRoleResponse.model';
   providedIn: 'root'
 })
 export class UserRoleService {
-  path = `${GATEWAY_URL}${SERVICES_PATHS.USER}` + '/roles';
+  path = `${GATEWAY_URL}${SERVICES_PATHS.USER}` + '/user-roles';
 
   constructor(private http: HttpClient) { }
 

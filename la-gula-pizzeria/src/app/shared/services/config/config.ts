@@ -6,6 +6,6 @@ export enum SERVICES_PATHS {
     DELIVERY = '/delivery',
     ORDENING = '/ordernig',
     PAYMENT = '/payment',
-    USER = '/user',
+    USER = '/users',
     SECURITY = '/security'
 }
