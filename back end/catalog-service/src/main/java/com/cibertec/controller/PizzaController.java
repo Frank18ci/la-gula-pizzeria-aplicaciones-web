@@ -2,17 +2,22 @@ package com.cibertec.controller;
 
 import com.cibertec.dto.PizzaRequest;
 import com.cibertec.service.PizzaService;
+import com.cibertec.storage.ImageStorageService;
+import com.cibertec.storage.TypeStorageEnum;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/pizzas")
 public class PizzaController {
     private final PizzaService pizzaService;
+    private final ImageStorageService imageStorageService;
     @GetMapping
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(pizzaService.getPizzas());
@@ -21,17 +26,21 @@ public class PizzaController {
     public ResponseEntity<?> getById(@PathVariable Long id) {
         return ResponseEntity.ok(pizzaService.getPizzaById(id));
     }
-    @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid PizzaRequest pizzaRequest) {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> create(@ModelAttribute @Valid PizzaRequest pizzaRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(pizzaService.createPizza(pizzaRequest));
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PizzaRequest pizzaRequest) {
+    @PutMapping(path = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> update(@PathVariable Long id, @ModelAttribute  @Valid PizzaRequest pizzaRequest) {
         return ResponseEntity.ok(pizzaService.updatePizza(id, pizzaRequest));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         pizzaService.deletePizza(id);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("imagen/{image}")
+    public ResponseEntity<?> getImage(@PathVariable String image) {
+        return imageStorageService.obtainImage(image, TypeStorageEnum.PIZZA);
     }
 }

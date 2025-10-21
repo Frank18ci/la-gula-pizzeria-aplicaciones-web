@@ -28,6 +28,7 @@ public class Topping {
     private Boolean isVegetarian = false;
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal basePrice = BigDecimal.ZERO;
+    private String image;
     @Column(nullable = false)
     private Boolean active = true;
     @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)

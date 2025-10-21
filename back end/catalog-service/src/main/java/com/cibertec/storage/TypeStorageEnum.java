@@ -1,6 +1,6 @@
 package com.cibertec.storage;
 
-public enum TipeStorageEnum {
+public enum TypeStorageEnum {
     PIZZA,
     TOPPING
 }

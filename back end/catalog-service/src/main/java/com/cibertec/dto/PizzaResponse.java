@@ -15,6 +15,7 @@ public record PizzaResponse(
         Boolean active,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
-        List<ToppingResponse> toppings
+        List<ToppingResponse> toppings,
+        String image
 ) {
 }

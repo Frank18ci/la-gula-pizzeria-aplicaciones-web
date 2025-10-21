@@ -1,4 +1,4 @@
-package com.cibertec.dto;
+package com.cibertec.client.dto;
 
 import lombok.Builder;
 

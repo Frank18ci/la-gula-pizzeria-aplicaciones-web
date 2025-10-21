@@ -26,6 +26,7 @@ public class Pizza {
     private String description;
     @Column(precision = 10, scale = 2, nullable = false)
     private BigDecimal basePrice;
+    private String image;
     @Column(nullable = false)
     private Boolean active = true;
     @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
