@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GATEWAY_URL, SERVICES_PATHS } from '../config/config';
 import { Observable } from 'rxjs';
-import OrderResponse from '../../model/ordening/response/orderResponse.model';
+import orderResponse from '../../model/ordening/response/orderResponse.model';
 import OrderRequest from '../../model/ordening/request/orderRequest.model';
 
 @Injectable({
@@ -13,19 +13,23 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
-  getAllOrders() : Observable<OrderResponse[]> {
-    return this.http.get<OrderResponse[]>(this.path);
+  getAllOrders() : Observable<orderResponse[]> {
+    return this.http.get<orderResponse[]>(this.path);
   }
-  getOrderById(id: number) : Observable<OrderResponse> {
-    return this.http.get<OrderResponse>(`${this.path}/${id}`);
+  getOrderById(id: number) : Observable<orderResponse> {
+    return this.http.get<orderResponse>(`${this.path}/${id}`);
   }
-  saveOrder(order: OrderRequest) : Observable<OrderResponse> {
-    return this.http.post<OrderResponse>(this.path, null);
+  saveOrder(order: OrderRequest) : Observable<orderResponse> {
+    return this.http.post<orderResponse>(this.path, null);
   }
-  updateOrder(id: number, order: OrderRequest) : Observable<OrderResponse> {
-    return this.http.put<OrderResponse>(`${this.path}/${id}`, order);
+  updateOrder(id: number, order: OrderRequest) : Observable<orderResponse> {
+    return this.http.put<orderResponse>(`${this.path}/${id}`, order);
   }
   deleteOrder(id: number) : Observable<void> {
     return this.http.delete<void>(`${this.path}/${id}`);
   }
+
+  getDeliveriesByOrderNumber(orderNumber: string) : Observable<orderResponse[]> {
+      return this.http.get<orderResponse[]>(`${this.path}/search?orderNumber=${orderNumber}`);
+    }
 }
