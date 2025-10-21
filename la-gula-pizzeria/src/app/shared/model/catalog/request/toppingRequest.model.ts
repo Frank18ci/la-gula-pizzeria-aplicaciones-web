@@ -3,5 +3,6 @@ export default interface ToppingRequest{
     category: string;
     isVegetarian: boolean;   
     basePrice: number;
+    image: string;
     active: boolean; 
 }

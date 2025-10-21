@@ -1,1 +1,30 @@
-<p>register-page works!</p>
+<div class="h-screen flex items-center justify-center bg-gray-50">
+    <div class="">
+        <form class="bg-white px-8 py-12 rounded shadow-md md:min-w-md" [formGroup]="form" (ngSubmit)="register()">
+            <div class="flex justify-center mb-6">
+                <img src="./logo-gula.png" alt="La Gula Logo" class="size-42 object-contain">
+            </div>
+            <h2 class="text-center text-2xl mb-4 font-semibold">Crear cuenta</h2>
+            <div class="space-y-2 mt-4">
+                <label for="fullName">Nombre completo</label>
+                <input type="text" id="fullName" formControlName="fullName" class="border p-2 w-full rounded-lg border-gray-400 text-gray-400 outline-none focus:border-blue-500" placeholder="Ingresa tu nombre completo" required>
+            </div>
+            <div class="space-y-2 mt-4">
+                <label for="email">Email</label>
+                <input type="email" id="email" formControlName="email" class="border p-2 w-full rounded-lg border-gray-400 text-gray-400 outline-none focus:border-blue-500" placeholder="Ingresa tu correo" required>
+            </div>
+
+            <div class="space-y-2 mt-4">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" formControlName="password" class="border p-2 w-full rounded-lg border-gray-400 text-gray-400 outline-none focus:border-blue-500" placeholder="Ingresa tu contraseña" required>
+            </div>
+
+            <div class="mt-6">
+                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg w-full">Registrarse</button>
+            </div>
+            <div>
+                <p class="text-center text-sm text-gray-600 mt-4">¿Ya tienes una cuenta? <a routerLink="/auth/login" class="text-blue-500 hover:underline">Inicia sesión</a></p>
+            </div>
+        </form>
+    </div>
+</div>

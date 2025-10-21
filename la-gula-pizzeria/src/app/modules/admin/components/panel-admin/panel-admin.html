@@ -1,0 +1,99 @@
+<div class="p-6 min-h-full flex flex-col">
+  <h1 class="text-lg font-semibold text-center">Admin Panel</h1>
+
+  <div class="flex flex-col space-y-4 mt-6 flex-1">
+    <a routerLink="/admin/dashboard" routerLinkActive="active-link" class="px-4 py-2 flex items-center gap-2">
+      <mat-icon>dashboard</mat-icon> Dashboard
+    </a>
+    <div class="my-2">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Catalogo </mat-panel-title>
+          <mat-panel-description>
+            <mat-icon>inventory</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <a routerLink="/admin/pizzas" routerLinkActive="active-link" class="px-4 py-2 flex items-center gap-2">
+          <mat-icon>local_pizza</mat-icon> Pizzas
+        </a>
+        <a routerLink="/admin/toppings" routerLinkActive="active-link" class="px-2 text-sm py-2 flex items-center gap-2">
+            <mat-icon>cookie</mat-icon> Complementos
+        </a>
+      </mat-expansion-panel>
+    </div>
+    <div class="my-2">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Usuarios </mat-panel-title>
+          <mat-panel-description>
+            <mat-icon>people</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <a routerLink="/admin/clients" routerLinkActive="active-link" class="px-4 py-2 flex items-center gap-2">
+          <mat-icon>people</mat-icon> Clientes
+        </a>
+        <a routerLink="/admin/users" routerLinkActive="active-link" class="px-4 py-2 flex items-center gap-2">
+          <mat-icon>people</mat-icon> Personal
+        </a>
+        
+      </mat-expansion-panel>
+    </div>
+    
+    <div class="my-2">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Pagos </mat-panel-title>
+          <mat-panel-description>
+            <mat-icon>payment</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <a routerLink="/admin/ordersPayment" routerLinkActive="active-link" class="px-4 py-2 flex items-center gap-2">
+          <mat-icon>receipt</mat-icon> Ordenes
+        </a>
+        <a routerLink="/admin/payments" routerLinkActive="active-link" class="px-4 py-2 flex items-center gap-2">
+          <mat-icon>payment</mat-icon> Pagos
+        </a>
+        
+      </mat-expansion-panel>
+    </div>
+    <div class="my-2">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Ordenes </mat-panel-title>
+          <mat-panel-description>
+            <mat-icon>shopping_cart</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <a routerLink="/admin/ordersOrdering" routerLinkActive="active-link" class="px-4 py-2 flex items-center gap-2">
+          <mat-icon>shopping_cart</mat-icon> Ordenes
+        </a>
+        
+      </mat-expansion-panel>
+    </div>
+
+    <div class="my-2">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Entregas </mat-panel-title>
+          <mat-panel-description>
+            <mat-icon>local_shipping</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <a routerLink="/admin/deliveries" routerLinkActive="active-link" class="px-4 py-2 flex items-center gap-2">
+          <mat-icon>local_shipping</mat-icon> Entregas
+        </a>
+        
+      </mat-expansion-panel>
+    </div>
+
+
+    <a routerLink="/admin/settings" routerLinkActive="active-link" class="px-4 py-2 flex items-center gap-2 mt-auto">
+      <mat-icon>settings</mat-icon> Configuración
+    </a>
+  </div>
+</div>
