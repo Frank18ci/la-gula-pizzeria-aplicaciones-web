@@ -6,6 +6,7 @@ export default interface PizzaResponse {
     name: string;
     description?: string | null;
     basePrice: number;
+    image: string;
     active: boolean;
     toppings?: ToppingResponse[];
 }

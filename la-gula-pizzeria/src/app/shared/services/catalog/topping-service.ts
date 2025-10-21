@@ -19,10 +19,10 @@ export class ToppingService {
   getToppingById(id: number) : Observable<ToppingResponse> {
     return this.http.get<ToppingResponse>(`${this.path}/${id}`);
   }
-  saveTopping(topping: ToppingRequest) : Observable<ToppingResponse> {
+  saveTopping(topping: FormData) : Observable<ToppingResponse> {
     return this.http.post<ToppingResponse>(this.path, topping);
   }
-  updateTopping(id: number, topping: ToppingRequest) : Observable<ToppingResponse> {
+  updateTopping(id: number, topping: FormData) : Observable<ToppingResponse> {
     return this.http.put<ToppingResponse>(`${this.path}/${id}`, topping);
   }
   deleteTopping(id: number) : Observable<void> {
