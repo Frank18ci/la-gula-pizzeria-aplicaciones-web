@@ -14,6 +14,7 @@ public record ToppingResponse(
         BigDecimal basePrice,
         Boolean active,
         LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        LocalDateTime updatedAt,
+        String image
 ) {
 }

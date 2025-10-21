@@ -2,6 +2,7 @@ package com.cibertec.client;
 
 import com.cibertec.client.dto.UserRequest;
 import com.cibertec.client.dto.UserResponse;
+import com.cibertec.client.dto.UserRoleRequest;
 import com.cibertec.client.dto.UserRoleResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,8 @@ public interface UserClient {
     @GetMapping("/user-roles/user/{idUser}")
     List<UserRoleResponse> getUserRolesByUserId(@PathVariable Long idUser);
 
+    @GetMapping("/user-roles")
+    UserRoleResponse saveUserRole(@RequestBody UserRoleRequest userRoleRequest);
 
     @PostMapping("/users")
     UserResponse createUser(@RequestBody UserRequest userRequest);

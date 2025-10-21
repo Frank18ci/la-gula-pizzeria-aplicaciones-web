@@ -3,13 +3,18 @@ package com.cibertec.service.impl;
 import com.cibertec.client.UserClient;
 import com.cibertec.client.dto.UserRequest;
 import com.cibertec.client.dto.UserResponse;
+import com.cibertec.client.dto.UserRoleRequest;
+import com.cibertec.client.dto.UserRoleResponse;
 import com.cibertec.dto.AuthRequest;
+import com.cibertec.dto.AuthResponse;
 import com.cibertec.exception.BadRequest;
 import com.cibertec.security.util.JwtUtils;
 import com.cibertec.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +24,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public String login(AuthRequest authRequest) {
+    public AuthResponse login(AuthRequest authRequest) {
         UserResponse user = userClient.getUserByEmail(authRequest.username());
 
         if (user == null) {
@@ -29,7 +34,14 @@ public class AuthServiceImpl implements AuthService {
         if (!passwordEncoder.matches(authRequest.password(), user.password())) {
             throw new BadRequest("Invalid email or password");
         }
-        return jwtUtil.generateAccessToken(user.email());
+        String token = jwtUtil.generateAccessToken(user.email());
+        List<UserRoleResponse> userRoleResponses = userClient.getUserRolesByUserId(user.id());
+        return AuthResponse.builder()
+                .token(token)
+                .fullName(user.fullName())
+                .username(user.email())
+                .roles(userRoleResponses.stream().map(ur -> ur.role().name()).toList())
+                .build();
     }
 
     @Override
@@ -41,6 +53,12 @@ public class AuthServiceImpl implements AuthService {
                 userRequest.phone(),
                 userRequest.status()
         );
-        return userClient.createUser(userRequest);
+        UserResponse userResponse = userClient.createUser(userRequest);
+        userClient.saveUserRole(UserRoleRequest.builder()
+                .userId(userResponse.id())
+                .roleId(2L)
+                .build());
+        //Create user with ROLE_USER by default
+        return userResponse;
     }
 }

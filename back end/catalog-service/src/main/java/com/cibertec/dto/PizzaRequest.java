@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,6 +20,7 @@ public record PizzaRequest(
         BigDecimal basePrice,
         @NotNull(message = "El active no puede estar vacío")
         Boolean active,
-        List<Long> toppingIds
+        List<Long> toppingIds,
+        MultipartFile image
 ) {
 }

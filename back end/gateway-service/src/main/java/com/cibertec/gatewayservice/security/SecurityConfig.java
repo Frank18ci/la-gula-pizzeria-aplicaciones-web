@@ -29,7 +29,7 @@ public class SecurityConfig {
                         auth
                                 .requestMatchers("/security/auth/login", "/security/auth/register").permitAll()
                                 .requestMatchers("/public/**").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/**").permitAll()
+                                .requestMatchers("/**").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)

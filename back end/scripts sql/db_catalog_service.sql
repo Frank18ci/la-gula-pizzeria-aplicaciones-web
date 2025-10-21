@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS toppings (
   category VARCHAR(50) NULL,                 -- Ej: Carne, Vegetal, Queso
   is_vegetarian BOOLEAN NOT NULL DEFAULT FALSE,
   base_price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  image VARCHAR(255) NULL,                  -- URL o path de imagen
   active BOOLEAN NOT NULL DEFAULT TRUE,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -50,6 +51,7 @@ CREATE TABLE IF NOT EXISTS pizzas (
   name VARCHAR(120) NOT NULL UNIQUE,         -- Ej: Margarita, Hawaiana
   description VARCHAR(500) NULL,
   base_price DECIMAL(10,2) NOT NULL,         -- precio base antes de tamaño/masa
+  image VARCHAR(255) NULL,                  -- URL o path de imagen
   active BOOLEAN NOT NULL DEFAULT TRUE,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

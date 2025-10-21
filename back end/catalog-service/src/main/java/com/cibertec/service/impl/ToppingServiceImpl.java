@@ -6,6 +6,8 @@ import com.cibertec.exception.ResourceNotFound;
 import com.cibertec.model.Topping;
 import com.cibertec.repository.ToppingRepository;
 import com.cibertec.service.ToppingService;
+import com.cibertec.storage.ImageStorageService;
+import com.cibertec.storage.TypeStorageEnum;
 import com.cibertec.util.ToppingMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.List;
 public class ToppingServiceImpl implements ToppingService {
     private final ToppingRepository toppingRepository;
     private final ToppingMapper toppingMapper;
+    private final ImageStorageService imageStorageService;
     @Override
     public List<ToppingResponse> getToppings() {
         return toppingMapper.toDtoList(toppingRepository.findAll());
@@ -31,7 +34,15 @@ public class ToppingServiceImpl implements ToppingService {
 
     @Override
     public ToppingResponse createTopping(ToppingRequest toppingRequest) {
-        return toppingMapper.toDto(toppingRepository.save(toppingMapper.toEntity(toppingRequest)));
+        Topping topping = toppingMapper.toEntity(toppingRequest, toppingRequest.name());
+
+        try{
+            imageStorageService.saveImage(toppingRequest.image(), topping.getName(), TypeStorageEnum.TOPPING);
+        } catch (Exception e){
+            throw new RuntimeException("Could not store the image. Error: " + e.getMessage());
+        }
+
+        return toppingMapper.toDto(toppingRepository.save(topping));
     }
 
     @Override
@@ -44,6 +55,13 @@ public class ToppingServiceImpl implements ToppingService {
         toppingFound.setIsVegetarian(toppingRequest.isVegetarian());
         toppingFound.setBasePrice(toppingRequest.basePrice());
         toppingFound.setActive(toppingRequest.active());
+
+        try{
+            imageStorageService.saveImage(toppingRequest.image(), toppingFound.getName(), TypeStorageEnum.TOPPING);
+        } catch (Exception e){
+            throw new RuntimeException("Could not store the image. Error: " + e.getMessage());
+        }
+
         return toppingMapper.toDto(toppingRepository.save(toppingFound));
     }
 

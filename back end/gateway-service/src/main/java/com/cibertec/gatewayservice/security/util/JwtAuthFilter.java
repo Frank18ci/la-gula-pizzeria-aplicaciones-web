@@ -28,6 +28,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        if (HttpMethod.POST.matches(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        if (HttpMethod.PUT.matches(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
