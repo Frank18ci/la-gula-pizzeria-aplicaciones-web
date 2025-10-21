@@ -36,6 +36,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        if (HttpMethod.DELETE.matches(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         if (HttpMethod.OPTIONS.matches(request.getMethod())) {
             filterChain.doFilter(request, response);
             return;

@@ -20,10 +20,10 @@ spring:
                 - Path=/catalog/**
               filters:
                 - StripPrefix=1
-            - id: customers-service
-              uri: lb://customers-service
+            - id: customer-service
+              uri: lb://customer-service
               predicates:
-                - Path=/customers/**
+                - Path=/customer/**
               filters:
                 - StripPrefix=1
             - id: delivery-service
