@@ -53,25 +53,7 @@ export class PizzasPage implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (pizzaDialogData.id) {
-          this.pizzaService.updatePizza(pizzaDialogData.id, result).subscribe({
-            next: () => {
-              this.loadPizzas();
-            },
-            error: (error) => {
-              console.error('Error updating pizza:', error);
-            }
-          });
-        } else {
-          this.pizzaService.savePizza(result).subscribe({
-            next: () => {
-              this.loadPizzas();
-            },
-            error: (error) => {
-              console.error('Error creating pizza:', error);
-            }
-          });
-        }
+        this.loadPizzas();
       }
     });
   }
