@@ -1,1 +1,77 @@
-<p>deliveries-page works!</p>
+<div class="container mx-auto">
+    <h1 class="text-2xl font-bold">Mantenimiento de Entregas</h1>
+    <div class="my-4">
+        <button (click)="openDialog()"
+            class="bg-blue-600 text-white font-semibold py-2 px-5 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300 border border-transparent cursor-pointer">
+            <mat-icon class="align-middle">add</mat-icon> Agregar Entregas
+        </button>
+    </div>
+    <div class="bg-white rounded-lg p-4 my-4">
+        <div class="mb-4">
+            <input type="text" placeholder="Buscar nombre..." (input)="applyFilter($event)"
+                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+    </div>
+    <div>
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let delivery"> {{delivery.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="method">
+                    <th mat-header-cell *matHeaderCellDef> Metodo </th>
+                    <td mat-cell *matCellDef="let delivery"> {{delivery.method}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Estado </th>
+                    <td mat-cell *matCellDef="let delivery"> {{delivery.status}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="driverName">
+                    <th mat-header-cell *matHeaderCellDef> Nom. Conductor </th>
+                    <td mat-cell *matCellDef="let delivery"> {{ delivery.driverName }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="driverPhone">
+                    <th mat-header-cell *matHeaderCellDef> Tel. Conductor </th>
+                    <td mat-cell *matCellDef="let delivery"> {{ delivery.driverPhone }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="instructions">
+                    <th mat-header-cell *matHeaderCellDef> Instruccion </th>
+                    <td mat-cell *matCellDef="let delivery">{{delivery.instructions.length > 15 ? (delivery.instructions | slice:0:15) + '...' : delivery.instructions}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Acciones">
+                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                    <td mat-cell *matCellDef="let delivery">
+                        <div class="flex gap-2">
+                            <button (click)="viewDeliveryDetails(delivery.id)" mat-button
+                                class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors">
+                                <mat-icon class="text-base">visibility</mat-icon>
+                            </button>
+
+                            <button (click)="openDialog(delivery)" mat-button
+                                class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-yellow-600 bg-yellow-50 hover:bg-yellow-100 transition-colors">
+                                <mat-icon class="text-base">edit</mat-icon>
+                            </button>
+
+                            <button (click)="deleteDelivery(delivery.id)" mat-button
+                                class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-red-600 bg-red-50 hover:bg-red-100 transition-colors">
+                                <mat-icon class="text-base">delete</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Selección de página">
+            </mat-paginator>
+        </div>
+    </div>
+</div>
