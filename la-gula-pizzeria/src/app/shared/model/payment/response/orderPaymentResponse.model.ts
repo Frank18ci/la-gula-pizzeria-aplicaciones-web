@@ -1,4 +1,4 @@
-export default interface OrderResponse {
+export default interface OrderPaymentResponse {
     id: number;
     customerName: string;
     totalAmount: number;

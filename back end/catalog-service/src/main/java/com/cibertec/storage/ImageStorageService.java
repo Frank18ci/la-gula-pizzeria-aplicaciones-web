@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -19,7 +20,6 @@ import java.nio.file.Paths;
 
 @Service
 public class ImageStorageService {
-    public static Path root = Paths.get("resources","uploads");
     public static Path rootPizza = Paths.get("resources","uploads", "pizzas");
     public static Path rootTopping = Paths.get("resources","uploads", "toppings");
     /**
@@ -43,32 +43,52 @@ public class ImageStorageService {
      * </p>
      */
     public void saveImage(MultipartFile image, String fileName, TypeStorageEnum typeStorageEnum) throws IOException {
+        Path rootDir;
         switch (typeStorageEnum) {
-            case PIZZA -> root = Paths.get("resources","uploads", "pizzas");
-            case TOPPING -> root = Paths.get("resources","uploads", "toppings");
+            case PIZZA -> rootDir = rootPizza;
+            case TOPPING -> rootDir = rootTopping;
             default -> throw new RuntimeException("Invalid storage type");
         }
 
         if (image == null || image.isEmpty()) {
             throw new RuntimeException("Image file is empty");
         }
-        Files.createDirectories(root);
 
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(root, fileName + ".*")) {
+        if (!Files.exists(rootDir)) {
+            Files.createDirectories(rootDir);
+        }
+
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(rootDir, fileName + ".jpg")) {
             for (Path oldFile : stream) {
                 Files.deleteIfExists(oldFile);
             }
         }
 
-        BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
-        if (bufferedImage == null) {
-            throw new RuntimeException("Failed to read image file");
+        BufferedImage originalImage = ImageIO.read(image.getInputStream());
+        if (originalImage == null) {
+            throw new RuntimeException("Failed to read image file (not a valid image)");
         }
 
-        String fileNameWithExt = fileName + ".jpg";
-        Path rutaCompleta = root.resolve(fileNameWithExt);
+        BufferedImage jpgImage = new BufferedImage(
+                originalImage.getWidth(),
+                originalImage.getHeight(),
+                BufferedImage.TYPE_INT_RGB
+        );
 
-        ImageIO.write(bufferedImage, "jpg", rutaCompleta.toFile());
+        Graphics2D g2d = jpgImage.createGraphics();
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(0, 0, originalImage.getWidth(), originalImage.getHeight());
+        g2d.drawImage(originalImage, 0, 0, null);
+        g2d.dispose();
+
+        String fileNameWithExt = fileName + ".jpg";
+        Path fullPath = rootDir.resolve(fileNameWithExt);
+
+        boolean written = ImageIO.write(jpgImage, "jpg", fullPath.toFile());
+        if (!written) {
+            throw new RuntimeException("Error writing image as JPG");
+        }
+
     }
     public ResponseEntity<?> obtainImage(String image, TypeStorageEnum typeStorageEnum) {
         Path filePath;
