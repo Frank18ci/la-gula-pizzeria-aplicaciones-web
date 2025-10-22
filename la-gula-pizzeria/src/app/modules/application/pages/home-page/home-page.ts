@@ -13,7 +13,7 @@ import { PizzaService } from '../../../../shared/services/catalog/pizza-service'
 })
 export class HomePage  implements OnInit {
 
-  pizza! : PizzaResponse[]; 
+  pizza : PizzaResponse[] = []; 
 
 
  featuredPizzas = [
