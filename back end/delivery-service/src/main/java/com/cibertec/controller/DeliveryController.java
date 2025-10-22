@@ -25,7 +25,7 @@ public class DeliveryController {
 
     private final DeliveryService deliveryService;
 
-     @GetMapping("deliveries")
+     @GetMapping
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(deliveryService.getAllDeliveries());
     }
@@ -35,7 +35,7 @@ public class DeliveryController {
         return ResponseEntity.ok(deliveryService.getDeliveryById(id));
     }
 
-    @PostMapping("deliveries")
+    @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid DeliveryRequest deliveryRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(deliveryService.createDelivery(deliveryRequest));
     }
