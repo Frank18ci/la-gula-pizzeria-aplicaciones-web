@@ -11,7 +11,6 @@ import com.cibertec.util.UserRoleMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -42,5 +41,10 @@ public class UserRoleServiceImpl implements UserRoleService {
                 () -> new ResourceNotFound("UserRole not found with userId: " + userId + " and roleId: " + roleId)
         );
         userRoleRepository.delete(userRoleFound);
+    }
+
+    @Override
+    public List<UserRoleResponse> getUserRolesByUserId(Long idUser) {
+        return userRoleMapper.toDtoList(userRoleRepository.findByUserId(idUser));
     }
 }

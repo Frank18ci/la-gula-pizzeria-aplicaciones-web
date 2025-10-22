@@ -18,13 +18,16 @@ export class PizzaService {
   getAllPizzas() : Observable<PizzaResponse[]> {
     return this.http.get<PizzaResponse[]>(this.path);
   }
+  getPizzaByName(name: string) : Observable<PizzaResponse[]> {
+    return this.http.get<PizzaResponse[]>(`${this.path}/search`, { params: { name } });
+  }
   getPizzaById(id: number) : Observable<PizzaResponse> {
     return this.http.get<PizzaResponse>(`${this.path}/${id}`);
   }
-  savePizza(pizza: PizzaRequest) : Observable<PizzaResponse> {
+  savePizza(pizza: FormData) : Observable<PizzaResponse> {
     return this.http.post<PizzaResponse>(this.path, pizza);
   }
-  updatePizza(id: number, pizza: PizzaRequest) : Observable<PizzaResponse> {
+  updatePizza(id: number, pizza: FormData) : Observable<PizzaResponse> {
     return this.http.put<PizzaResponse>(`${this.path}/${id}`, pizza);
   }
   deletePizza(id: number) : Observable<void> {

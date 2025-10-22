@@ -1,0 +1,94 @@
+<div class="container mx-auto">
+    <h1 class="text-2xl font-bold">Mantenimiento de Pizzas</h1>
+    <div class="my-4">
+        <button (click)="openDialog()"
+            class="bg-blue-600 text-white font-semibold py-2 px-5 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300 border border-transparent cursor-pointer">
+            <mat-icon class="align-middle">add</mat-icon> Agregar Pizza
+        </button>
+    </div>
+    <div class="bg-white rounded-lg p-4 my-4">
+        <div class="mb-4">
+            <input type="text" placeholder="Buscar nombre..." (input)="applyFilter($event)"
+                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+    </div>
+    <div>
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="Id">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let pizza"> {{pizza.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Imagen">
+                    <th mat-header-cell *matHeaderCellDef> Imagen </th>
+                    <td mat-cell *matCellDef="let pizza">
+                        @if(pizza.image){
+                        <img [src]="rootImage + pizza.image" alt="Imagen de la pizza"
+                            class="w-16 h-16 object-cover rounded-md">
+                        } @else {
+                        <span class="text-gray-500">No hay imagen</span>
+                        }
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Nombre">
+                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                    <td mat-cell *matCellDef="let pizza"> {{pizza.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Precio base">
+                    <th mat-header-cell *matHeaderCellDef> Precio base </th>
+                    <td mat-cell *matCellDef="let pizza"> {{ pizza.basePrice | currency:'PEN':'symbol-narrow' }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Complementos">
+                    <th mat-header-cell *matHeaderCellDef> Complementos </th>
+                    <td mat-cell *matCellDef="let pizza"> 
+                          {{ getToppingsText(pizza) }}    
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Activo">
+                    <th mat-header-cell *matHeaderCellDef> Activo </th>
+                    <td mat-cell *matCellDef="let pizza">
+                        <div class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-sm font-medium" [ngClass]="pizza.active
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-red-100 text-red-700'">
+                            <mat-icon class="text-base">
+                                {{ pizza.active ? 'check_circle' : 'cancel' }}
+                            </mat-icon>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Acciones">
+                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                    <td mat-cell *matCellDef="let pizza">
+                        <div class="flex gap-2">
+                            <button (click)="viewPizzaDetails(pizza.id)" mat-button
+                                class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors">
+                                <mat-icon class="text-base">visibility</mat-icon>
+                            </button>
+
+                            <button (click)="openDialog(pizza)" mat-button
+                                class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-yellow-600 bg-yellow-50 hover:bg-yellow-100 transition-colors">
+                                <mat-icon class="text-base">edit</mat-icon>
+                            </button>
+
+                            <button (click)="deletePizza(pizza.id)" mat-button
+                                class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-red-600 bg-red-50 hover:bg-red-100 transition-colors">
+                                <mat-icon class="text-base">delete</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Selección de página">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

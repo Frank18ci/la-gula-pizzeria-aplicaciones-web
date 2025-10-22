@@ -1,0 +1,75 @@
+<h2 mat-dialog-title>{{deliveryId ? 'Editar' : 'Agregar'}} Delivery</h2>
+<div mat-dialog-content class="bg-gray-50 rounded-xl p-6 shadow-sm">
+    <form class="grid grid-cols-1 md:grid-cols-2 gap-6" [formGroup]="form" enctype="multipart/form-data">
+        <!-- Columna izquierda -->
+        <div class="flex flex-col gap-4">
+
+            <!--<mat-form-field class="w-full *:px-3">
+                <mat-label>Nro. Orden</mat-label>
+                <mat-select formControlName="orderId" name="orderId">
+                    @for (delivery of delivery; track delivery.id) {
+                      <mat-option [value]="delivery.id">{{delivery.orderId}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>-->
+            <mat-form-field class="w-full *:px-3">
+                <mat-label>Nro. Nro. Orden</mat-label>
+                <input matInput type="number" formControlName="orderId" name="orderId" required>
+            </mat-form-field>
+
+            <mat-form-field class="w-full *:px-3">
+                <mat-label>Nro. Dirección</mat-label>
+                <input matInput type="number" formControlName="addressId" name="addressId" required>
+            </mat-form-field>
+
+            <mat-form-field class="w-full *:px-3">
+                <mat-label>Metodo Entrega</mat-label>
+                <mat-select formControlName="method" name="method" required>
+                    <mat-option [value]="'DELIVERY'">DELIVERY</mat-option>
+                    <mat-option [value]="'PICKUP'">PICKUP</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            
+
+        </div>
+
+        <!-- Columna derecha -->         
+
+        <div class="flex flex-col gap-4">
+            <mat-form-field class="w-full *:px-3">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status" name="status" required>
+                
+                    <mat-option [value]="'pending'">Pendiente</mat-option>
+                    <mat-option [value]="'assigned'">Asignado</mat-option>
+                    <mat-option [value]="'en_route'">En ruta</mat-option>
+                    <mat-option [value]="'completed'">Completado</mat-option>
+                    <mat-option [value]="'canceled'">Cancelado</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-full *:px-3">
+                <mat-label>Nombre de conductor</mat-label>
+                <input matInput formControlName="driverName" name="driverName" required>
+            </mat-form-field>
+
+            <mat-form-field class="w-full *:px-3">
+                <mat-label>Num. Conductor</mat-label>
+                <textarea matInput formControlName="driverPhone" name="driverPhone" required ></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="w-full *:px-3">
+                <mat-label>Instrucciones</mat-label>
+                <textarea matInput formControlName="instructions" name="instructions" required rows="4"></textarea>
+            </mat-form-field>
+
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="closeDialog()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="saveDelivery()" [disabled]="form.invalid">
+        {{deliveryId ? 'Actualizar' : 'Guardar'}}
+    </button>
+</div>

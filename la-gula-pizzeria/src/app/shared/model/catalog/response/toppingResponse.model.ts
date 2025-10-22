@@ -4,5 +4,6 @@ export default interface ToppingResponse{
     category: string;
     isVegetarian: boolean;   
     basePrice: number;
+    image: string;
     active: boolean; 
 }

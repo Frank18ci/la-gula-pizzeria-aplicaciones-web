@@ -8,6 +8,8 @@ spring:
       discovery:
         enabled: true
         register: true
+
+
     gateway:
       server:
         webmvc:
@@ -18,10 +20,10 @@ spring:
                 - Path=/catalog/**
               filters:
                 - StripPrefix=1
-            - id: customers-service
-              uri: lb://customers-service
+            - id: customer-service
+              uri: lb://customer-service
               predicates:
-                - Path=/customers/**
+                - Path=/customer/**
               filters:
                 - StripPrefix=1
             - id: delivery-service
@@ -48,6 +50,17 @@ spring:
                 - Path=/users/**
               filters:
                 - StripPrefix=1
+            - id: security-service
+              uri: lb://security-service
+              predicates:
+                - Path=/security/**
+              filters:
+                - StripPrefix=1
+                - RemoveRequestHeader=Cookie
 
 server:
   port: 8080
+
+jwt:
+  time:
+    expiration: 86400000  # 1 dia en milisegundos
