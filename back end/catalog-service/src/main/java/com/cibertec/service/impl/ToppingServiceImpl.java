@@ -55,6 +55,8 @@ public class ToppingServiceImpl implements ToppingService {
         toppingFound.setIsVegetarian(toppingRequest.isVegetarian());
         toppingFound.setBasePrice(toppingRequest.basePrice());
         toppingFound.setActive(toppingRequest.active());
+        toppingFound.setImage(toppingMapper.toEntity(toppingRequest, toppingRequest.name()).getImage());
+
 
         try{
             imageStorageService.saveImage(toppingRequest.image(), toppingFound.getName(), TypeStorageEnum.TOPPING);

@@ -58,8 +58,9 @@ public class PizzaServiceImpl implements PizzaService {
         pizzaFound.setName(pizzaRequest.name());
         pizzaFound.setDescription(pizzaRequest.description());
         pizzaFound.setBasePrice(pizzaRequest.basePrice());
-        pizzaFound.setImage(pizzaFound.getImage());
+        pizzaFound.setImage(pizzaMapper.toEntity(pizzaRequest, toppingRepository, pizzaRequest.name()).getImage());
         pizzaFound.setActive(pizzaRequest.active());
+
         if(pizzaRequest.toppingIds() != null) {
             pizzaFound.setToppings(pizzaMapper.map(pizzaRequest.toppingIds(), toppingRepository));
         } else {

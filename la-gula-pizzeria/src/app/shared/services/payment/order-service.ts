@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { GATEWAY_URL, SERVICES_PATHS } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import OrderResponse from '../../model/payment/response/orderResponse.model';
+import OrderPaymentResponse from '../../model/payment/response/orderPaymentResponse.model';
+import OrderPaymentRequest from '../../model/payment/request/orderPaymentRequest.model';
 
 
 @Injectable({
@@ -13,17 +14,17 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
-  getAllOrders() : Observable<OrderResponse[]> {
-    return this.http.get<OrderResponse[]>(this.path);
+  getAllOrders() : Observable<OrderPaymentResponse[]> {
+    return this.http.get<OrderPaymentResponse[]>(this.path);
   }
-  getOrderById(id: number) : Observable<OrderResponse> {
-    return this.http.get<OrderResponse>(`${this.path}/${id}`);
+  getOrderById(id: number) : Observable<OrderPaymentResponse> {
+    return this.http.get<OrderPaymentResponse>(`${this.path}/${id}`);
   }
-  saveOrder(order: OrderResponse) : Observable<OrderResponse> {
-    return this.http.post<OrderResponse>(this.path, order);
+  saveOrder(order: OrderPaymentRequest) : Observable<OrderPaymentResponse> {
+    return this.http.post<OrderPaymentResponse>(this.path, order);
   }
-  updateOrder(id: number, order: OrderResponse) : Observable<OrderResponse> {
-    return this.http.put<OrderResponse>(`${this.path}/${id}`, order);
+  updateOrder(id: number, order: OrderPaymentRequest) : Observable<OrderPaymentResponse> {
+    return this.http.put<OrderPaymentResponse>(`${this.path}/${id}`, order);
   }
   deleteOrder(id: number) : Observable<void> {
     return this.http.delete<void>(`${this.path}/${id}`);

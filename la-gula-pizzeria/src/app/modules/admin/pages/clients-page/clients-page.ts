@@ -68,7 +68,7 @@ export class ClientsPage implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if(customerDialogData.id) {
+        if (customerDialogData.id) {
           this.customerService.updateCustomer(customerDialogData.id, result).subscribe({
             next: () => {
               this.loadCustomers();
