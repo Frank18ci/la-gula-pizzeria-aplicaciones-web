@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { AdminRoutingModule } from "../../../admin/admin-routing-module";
 
@@ -8,6 +8,13 @@ import { AdminRoutingModule } from "../../../admin/admin-routing-module";
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
-export class Header {
+export class Header implements OnInit {
 
+  ngOnInit() {
+    // Initialization logic can go here
+  }
+
+  images = [
+    {images: '/icons/logoo.jpeg'},
+  ];
 }
