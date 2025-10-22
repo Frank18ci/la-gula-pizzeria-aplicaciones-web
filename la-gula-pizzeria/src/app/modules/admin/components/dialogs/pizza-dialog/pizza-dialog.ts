@@ -115,7 +115,7 @@ export class PizzaDialog implements OnInit {
       : this.pizzaService.savePizza(fd);
 
     request$.subscribe({
-      next: (response: PizzaResponse) => {
+      next: () => {
         this.dialogRef.close(true);
       },
       error: (error) => {

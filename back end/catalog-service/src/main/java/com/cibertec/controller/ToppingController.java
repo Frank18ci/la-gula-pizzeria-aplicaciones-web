@@ -40,6 +40,6 @@ public class ToppingController {
     }
     @GetMapping("imagen/{image}")
     public ResponseEntity<?> getImage(@PathVariable String image) {
-        return imageStorageService.obtainImage(image, TypeStorageEnum.PIZZA);
+        return imageStorageService.obtainImage(image, TypeStorageEnum.TOPPING);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -19,7 +20,6 @@ import java.nio.file.Paths;
 
 @Service
 public class ImageStorageService {
-    public static Path root = Paths.get("resources","uploads");
     public static Path rootPizza = Paths.get("resources","uploads", "pizzas");
     public static Path rootTopping = Paths.get("resources","uploads", "toppings");
     /**
@@ -43,32 +43,63 @@ public class ImageStorageService {
      * </p>
      */
     public void saveImage(MultipartFile image, String fileName, TypeStorageEnum typeStorageEnum) throws IOException {
+        // 1️⃣ Determinar la carpeta según el tipo
+        Path rootDir;
         switch (typeStorageEnum) {
-            case PIZZA -> root = Paths.get("resources","uploads", "pizzas");
-            case TOPPING -> root = Paths.get("resources","uploads", "toppings");
+            case PIZZA -> rootDir = rootPizza;
+            case TOPPING -> rootDir = rootTopping;
             default -> throw new RuntimeException("Invalid storage type");
         }
 
+        System.out.println("Saving image to: " + rootDir.toAbsolutePath());
+
+        // 2️⃣ Validar el archivo
         if (image == null || image.isEmpty()) {
             throw new RuntimeException("Image file is empty");
         }
-        Files.createDirectories(root);
 
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(root, fileName + ".*")) {
+        // 3️⃣ Crear carpeta si no existe
+        if (!Files.exists(rootDir)) {
+            Files.createDirectories(rootDir);
+        }
+
+        // 4️⃣ Borrar imágenes anteriores con el mismo nombre
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(rootDir, fileName + ".jpg")) {
             for (Path oldFile : stream) {
                 Files.deleteIfExists(oldFile);
             }
         }
 
-        BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
-        if (bufferedImage == null) {
-            throw new RuntimeException("Failed to read image file");
+        // 5️⃣ Leer la imagen original (de cualquier formato)
+        BufferedImage originalImage = ImageIO.read(image.getInputStream());
+        if (originalImage == null) {
+            throw new RuntimeException("Failed to read image file (not a valid image)");
         }
 
-        String fileNameWithExt = fileName + ".jpg";
-        Path rutaCompleta = root.resolve(fileNameWithExt);
+        // 6️⃣ Crear imagen nueva tipo JPG (sin transparencia)
+        BufferedImage jpgImage = new BufferedImage(
+                originalImage.getWidth(),
+                originalImage.getHeight(),
+                BufferedImage.TYPE_INT_RGB
+        );
 
-        ImageIO.write(bufferedImage, "jpg", rutaCompleta.toFile());
+        Graphics2D g2d = jpgImage.createGraphics();
+        g2d.setColor(Color.WHITE); // Fondo blanco para imágenes con transparencia
+        g2d.fillRect(0, 0, originalImage.getWidth(), originalImage.getHeight());
+        g2d.drawImage(originalImage, 0, 0, null);
+        g2d.dispose();
+
+        // 7️⃣ Guardar siempre como JPG
+        String fileNameWithExt = fileName + ".jpg";
+        Path fullPath = rootDir.resolve(fileNameWithExt);
+        System.out.println("Full image path: " + fullPath.toAbsolutePath());
+
+        boolean written = ImageIO.write(jpgImage, "jpg", fullPath.toFile());
+        if (!written) {
+            throw new RuntimeException("Error writing image as JPG");
+        }
+
+        System.out.println("✅ Image saved successfully as JPG");
     }
     public ResponseEntity<?> obtainImage(String image, TypeStorageEnum typeStorageEnum) {
         Path filePath;
