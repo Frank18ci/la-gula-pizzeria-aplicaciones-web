@@ -1,4 +1,3 @@
-import { PizzaService } from './../../../../shared/services/catalog/pizza-service';
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,6 +5,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { PaymentService } from '../../../../shared/services/payment/payment-service';
 import { MatDialog } from '@angular/material/dialog';
+import { PaymentDialog } from '../../components/dialogs/payment-dialog/payment-dialog';
+import PaymentResponse from '../../../../shared/model/payment/response/paymentResponse.model';
 
 @Component({
   selector: 'app-payments-page',
@@ -14,7 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './payments-page.css'
 })
 export class PaymentsPage {
-  displayedColumns: string[] = ['id', 'customerName', 'currency', 'paymentStatusName', 'amount','createdAt', 'Acciones'];
+  displayedColumns: string[] = ['id', 'paymentStatus', 'currency', 'paymentStatusName', 'amount','createdAt', 'Acciones'];
   dataSource = new MatTableDataSource<PaymentResponse>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(
@@ -31,6 +32,7 @@ export class PaymentsPage {
           this.paymentService.getAllPayments().subscribe({
             next: (payment: PaymentResponse[]) => {
               this.dataSource.data = payment;
+              
             },
             error: (error) => {
               console.error('Error loading Pagos:', error);
@@ -38,8 +40,38 @@ export class PaymentsPage {
           });
     }  
     openDialog(payment?: PaymentResponse): void {
-          // Implementation for opening user dialog goes here
-    }
+          let paymentDialogData: any = {};
+              if (payment) {
+                paymentDialogData = { ...payment };
+              }
+              const dialogRef = this.dialog.open(PaymentDialog, {
+                width: '700px',
+                data: payment ? paymentDialogData : null
+              });
+              dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                  if(paymentDialogData.id) {
+                    this.paymentService.updatePayment(paymentDialogData.id, result).subscribe({
+                      next: () => {
+                        this.loadpayment();
+                      },
+                      error: (error) => {
+                        console.error('Error updating payment:', error);
+                      }
+                    });
+                  } else {
+                    this.paymentService.savePayment(result).subscribe({
+                      next: () => {
+                        this.loadpayment();
+                      },
+                      error: (error) => {
+                        console.error('Error creating payment:', error);
+                      }
+                    });
+                  }
+                }
+              });
+            }
     viewpaymentDetails(payment: PaymentResponse): void {
       // Implementation for viewing user details goes here
     }

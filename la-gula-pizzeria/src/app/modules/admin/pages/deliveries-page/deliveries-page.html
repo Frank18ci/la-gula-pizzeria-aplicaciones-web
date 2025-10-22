@@ -16,7 +16,7 @@
         <div class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource">
 
-                <ng-container matColumnDef="Id">
+                <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef> ID </th>
                     <td mat-cell *matCellDef="let delivery"> {{delivery.id}} </td>
                 </ng-container>
@@ -43,7 +43,7 @@
 
                 <ng-container matColumnDef="instructions">
                     <th mat-header-cell *matHeaderCellDef> Instruccion </th>
-                    <td mat-cell *matCellDef="let delivery"> {{ delivery.instructions }} </td>
+                    <td mat-cell *matCellDef="let delivery">{{delivery.instructions.length > 15 ? (delivery.instructions | slice:0:15) + '...' : delivery.instructions}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="Acciones">

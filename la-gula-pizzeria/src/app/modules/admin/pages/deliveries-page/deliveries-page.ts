@@ -6,6 +6,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import DeliveryResponse from '../../../../shared/model/delivery/response/deliveryResponse.model';
+import { DeliveryDialog } from '../../components/dialogs/delivery-dialog/delivery-dialog';
 
 @Component({
   selector: 'app-deliveries-page',
@@ -33,13 +34,43 @@ export class DeliveriesPage implements OnInit, AfterViewInit{
         next: (users: DeliveryResponse[]) => {
           this.dataSource.data = users;
         },
-        error: (error) => {
+        error: (error) => { 
           console.error('Error loading users:', error);
         }
       });
     }  
     openDialog(delivery?: DeliveryResponse): void {
-      // Implementation for opening user dialog goes here
+      let deliveryDialogData: any = {};
+          if (delivery) {
+            deliveryDialogData = { ...delivery };
+          }
+          const dialogRef = this.dialog.open(DeliveryDialog, {
+            width: '700px',
+            data: delivery ? deliveryDialogData : null
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+              if(deliveryDialogData.id) {
+                this.deliveryService.updateDelivery(deliveryDialogData.id, result).subscribe({
+                  next: () => {
+                    this.loadDelivery();
+                  },
+                  error: (error) => {
+                    console.error('Error updating delivery:', error);
+                  }
+                });
+              } else {
+                this.deliveryService.saveDelivery(result).subscribe({
+                  next: () => {
+                    this.loadDelivery();
+                  },
+                  error: (error) => {
+                    console.error('Error creating delivery:', error);
+                  }
+                });
+              }
+            }
+          });
     }
     viewDeliveryDetails(delivery: DeliveryResponse): void {
       // Implementation for viewing user details goes here
