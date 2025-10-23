@@ -16,7 +16,7 @@ import { OrderOrdeningDialog } from '../../components/dialogs/order-ordening-dia
   styleUrl: './orders-ordening-page.css'
 })
 export class OrdersOrdeningPage implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'orderNumber', 'status', 'orderMethod', 'discountTotal','paymentStatus', 'Acciones'];
+  displayedColumns: string[] = ['orderNumber', 'status', 'deliveryMethod', 'total','paymentStatus', 'placedAt', 'Acciones'];
   dataSource = new MatTableDataSource<orderResponse>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(

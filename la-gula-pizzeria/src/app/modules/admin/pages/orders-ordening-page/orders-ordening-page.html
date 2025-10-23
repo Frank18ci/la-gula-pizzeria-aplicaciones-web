@@ -16,11 +16,6 @@
         <div class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource">
 
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef> ID </th>
-                    <td mat-cell *matCellDef="let order"> {{order.id}} </td>
-                </ng-container>
-
                 <ng-container matColumnDef="orderNumber">
                     <th mat-header-cell *matHeaderCellDef> Num. Orden </th>
                     <td mat-cell *matCellDef="let order"> {{order.orderNumber}} </td>
@@ -31,19 +26,24 @@
                     <td mat-cell *matCellDef="let order"> {{order.status}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="orderMethod">
-                    <th mat-header-cell *matHeaderCellDef> Met. Pago </th>
-                    <td mat-cell *matCellDef="let order"> {{ order.orderMethod }} </td>
+                <ng-container matColumnDef="deliveryMethod">
+                    <th mat-header-cell *matHeaderCellDef> Met. Entrega </th>
+                    <td mat-cell *matCellDef="let order"> {{ order.deliveryMethod }} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="discountTotal">
+                <ng-container matColumnDef="total">
                     <th mat-header-cell *matHeaderCellDef> Total </th>
-                    <td mat-cell *matCellDef="let order"> {{ order.discountTotal }} </td>
+                    <td mat-cell *matCellDef="let order"> {{ order.total | currency:'S/.'}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="paymentStatus">
                     <th mat-header-cell *matHeaderCellDef> Pag. Estado </th>
                     <td mat-cell *matCellDef="let order"> {{ order.paymentStatus }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="placedAt">
+                    <th mat-header-cell *matHeaderCellDef> Fecha </th>
+                    <td mat-cell *matCellDef="let order"> {{ order.placedAt | date:'short' }} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="Acciones">

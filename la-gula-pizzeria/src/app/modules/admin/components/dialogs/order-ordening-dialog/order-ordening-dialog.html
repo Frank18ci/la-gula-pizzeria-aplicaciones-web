@@ -4,35 +4,34 @@
         <!-- Columna izquierda -->
         <div class="flex flex-col gap-4">
 
-            <!--<mat-form-field class="w-full *:px-3">
-                <mat-label>Nro. Orden</mat-label>
-                <mat-select formControlName="orderId" name="orderId">
-                    @for (delivery of delivery; track delivery.id) {
-                      <mat-option [value]="delivery.id">{{delivery.orderId}}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>-->
             <mat-form-field class="w-full *:px-3">
                 <mat-label>Nro. Orden</mat-label>
                 <input matInput formControlName="orderNumber" name="ordeorderNumberrId" required>
             </mat-form-field>
 
             <mat-form-field class="w-full *:px-3">
-                <mat-label>Id Customer</mat-label>
-                <input matInput type="number" formControlName="customerId" name="customerId" required>
+                <mat-label>Usuario</mat-label>
+                <mat-select formControlName="customerId" name="customerId" required>
+                    @for (user of users; track user.id) {
+                        <mat-option [value]="user.id">{{ user.fullName }}</mat-option>
+                    }
+                </mat-select>
             </mat-form-field>
 
             <mat-form-field class="w-full *:px-3">
                 <mat-label>Id Direccion</mat-label>
-                <input matInput type="number" formControlName="addressId" name="addressId" required>
+                <mat-select formControlName="addressId" name="addressId" required>
+                    @for (address of addresses; track address.id) {
+                        <mat-option [value]="address.id">{{ address.street }}, {{ address.city }}</mat-option>
+                    }
+                </mat-select>
             </mat-form-field>
 
             <mat-form-field class="w-full *:px-3">
                 <mat-label>Estado</mat-label>
                 <mat-select formControlName="status" name="status" required>
                     <mat-option [value]="'pending'">Pendiente</mat-option>
-                    <mat-option [value]="'assigned'">Asignado</mat-option>
-                    <mat-option [value]="'en_route'">En ruta</mat-option>
+                    <mat-option [value]="'in_progress'">En progreso</mat-option>
                     <mat-option [value]="'completed'">Completado</mat-option>
                     <mat-option [value]="'canceled'">Cancelado</mat-option>
                 </mat-select>
@@ -40,7 +39,7 @@
 
             <mat-form-field class="w-full *:px-3">
                 <mat-label>Met. Entrega</mat-label>
-                <mat-select formControlName="status" name="status" required>
+                <mat-select formControlName="deliveryMethod" name="deliveryMethod" required>
                     <mat-option [value]="'DELIVERY'">DELIVERY</mat-option>
                     <mat-option [value]="'PICKUP'">PICKUP</mat-option>
                 </mat-select>
@@ -51,27 +50,30 @@
                 <textarea matInput formControlName="notes" name="notes" required rows="4"></textarea>
             </mat-form-field>
 
-            
-            
-
         </div>
 
         <!-- Columna derecha -->         
 
         <div class="flex flex-col gap-4">
+
             <mat-form-field class="w-full *:px-3">
-                <mat-label>Nota</mat-label>
-                <textarea matInput type="number" formControlName="subtotal" name="subtotal" required rows="4"></textarea>
+                <mat-label>Subtotal</mat-label>
+                <input matInput type="number" formControlName="subtotal" name="subtotal" required>
             </mat-form-field>
 
             <mat-form-field class="w-full *:px-3">
-                <mat-label>TAX</mat-label>
-                <textarea matInput type="number" formControlName="tax" name="tax" required></textarea>
+                <mat-label>Impuestos</mat-label>
+                <input matInput type="number" formControlName="tax" name="tax" required>
             </mat-form-field>
 
             <mat-form-field class="w-full *:px-3">
-                <mat-label>Entrega libre</mat-label>
-                <textarea matInput type="number" formControlName="deliveryFee" name="deliveryFee" required></textarea>
+                <mat-label>Coste de Entrega</mat-label>
+                <input matInput type="number" formControlName="deliveryFee" name="deliveryFee" required>
+            </mat-form-field>
+
+            <mat-form-field class="w-full *:px-3">
+                <mat-label>Descuento total</mat-label>
+                <input matInput type="number" formControlName="discountTotal" name="discountTotal" required>
             </mat-form-field>
             
             <mat-form-field class="w-full *:px-3">
@@ -81,7 +83,7 @@
 
             <mat-form-field class="w-full *:px-3">
                 <mat-label>Status Pago</mat-label>
-                <mat-select formControlName="status" name="status" required>                
+                <mat-select formControlName="paymentStatus" name="paymentStatus" required>                
                     <mat-option [value]="'unpaid'">No pagado</mat-option>
                     <mat-option [value]="'paid'">Pagado</mat-option>                    
                 </mat-select>
@@ -89,7 +91,7 @@
 
             <mat-form-field class="w-full *:px-3">
                 <mat-label>Fecha</mat-label>
-                <textarea matInput type="date" formControlName="placedAt" name="placedAt" required></textarea>
+                <input matInput type="date" formControlName="placedAt" name="placedAt" required>
             </mat-form-field>
 
         </div>

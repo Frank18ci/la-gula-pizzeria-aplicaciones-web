@@ -10,7 +10,7 @@ import AdressRequest from '../../model/customer/request/adressRequest.model';
 })
 export class AdressService {
   
-  path = `${GATEWAY_URL}${SERVICES_PATHS.CUSTOMER}` + '/adresses';
+  path = `${GATEWAY_URL}${SERVICES_PATHS.CUSTOMER}` + '/addresses';
   
   constructor(private http: HttpClient) { }
 

@@ -20,7 +20,7 @@ export class OrderService {
     return this.http.get<orderResponse>(`${this.path}/${id}`);
   }
   saveOrder(order: OrderRequest) : Observable<orderResponse> {
-    return this.http.post<orderResponse>(this.path, null);
+    return this.http.post<orderResponse>(this.path, order);
   }
   updateOrder(id: number, order: OrderRequest) : Observable<orderResponse> {
     return this.http.put<orderResponse>(`${this.path}/${id}`, order);

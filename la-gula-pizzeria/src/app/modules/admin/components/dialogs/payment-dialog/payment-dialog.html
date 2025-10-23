@@ -4,30 +4,26 @@
         <!-- Columna izquierda -->
         <div class="flex flex-col gap-4">
 
-            <!--<mat-form-field class="w-full *:px-3">
-                <mat-label>Id Orden</mat-label>
-                <mat-select formControlName="userId" name="userId">
-                    @for (user of users; track user.id) {
-                      <mat-option [value]="user.id">{{user.fullName}}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field> -->
-
             <mat-form-field class="w-full *:px-3">
                 <mat-label>Id Orden</mat-label>
-                <input matInput type="number" formControlName="order" name="order" required>
+                <mat-select formControlName="orderId" name="orderId">
+                    @for(order of orders; track order.id) {
+                      <mat-option [value]="order.id">{{order.id}}</mat-option>
+                    }
+                </mat-select>
             </mat-form-field>
+
+            <mat-form-field class="w-full *:px-3">
+                <mat-label>Moneda</mat-label>
+                <mat-select formControlName="currency" name="currency">
+                    <mat-option value="PEN">Soles</mat-option>
+                    <mat-option value="DOL">Dólares</mat-option>
+                </mat-select>
+            </mat-form-field>
+
             <mat-form-field class="w-full *:px-3">
                 <mat-label>Monto</mat-label>
                 <input matInput type="number" formControlName="amount" name="amount" required>
-            </mat-form-field>
-            <mat-form-field class="w-full *:px-3">
-                <mat-label>Divisa</mat-label>
-                <input matInput formControlName="currency" name="currency" required>
-            </mat-form-field>
-            <mat-form-field class="w-full *:px-3">
-                <mat-label>ID del proveedor</mat-label>
-                <input matInput formControlName="paymentProvider" name="paymentProvider" required>
             </mat-form-field>
 
         </div>
@@ -36,18 +32,31 @@
         <div class="flex flex-col gap-4">
 
             <mat-form-field class="w-full *:px-3">
+                <mat-label>Cod. Proveedor Externo</mat-label>
+                <input matInput type="number" formControlName="externalId" name="externalId" required>
+            </mat-form-field>
+            
+            <mat-form-field class="w-full *:px-3">
+                <mat-label>Metodo de pago</mat-label>
+                <mat-select formControlName="paymentProviderId" name="paymentProviderId">
+                    @for(provider of paymentProviders; track provider.id) {
+                      <mat-option [value]="provider.id">{{provider.name}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-full *:px-3">
                 <mat-label>Estado de pago</mat-label>
-                <input matInput formControlName="paymentStatus" name="paymentStatus" required>
+                <mat-select formControlName="paymentStatusId" name="paymentStatusId">
+                    @for(status of paymentStatuses; track status.id) {
+                      <mat-option [value]="status.id">{{status.name}}</mat-option>
+                    }
+                </mat-select>
             </mat-form-field>
 
             <mat-form-field class="w-full *:px-3">
-                <mat-label>Id externo</mat-label>
-                <textarea matInput formControlName="externalId" name="externalId" required ></textarea>
-            </mat-form-field>
-
-            <mat-form-field class="w-full *:px-3">
-                <mat-label>Fecha de Creación</mat-label>
-                <input matInput tipe="date" formControlName="processedAt" name="processedAt" required>
+                <mat-label>Fecha de Procesamiento</mat-label>
+                <input matInput type="date" formControlName="processedAt" name="processedAt" required>
             </mat-form-field>
 
         </div>

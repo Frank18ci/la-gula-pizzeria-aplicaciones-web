@@ -9,7 +9,7 @@ import PaymentProviderRequest from '../../model/payment/request/paymentProviderR
   providedIn: 'root'
 })
 export class PaymentProviderService {
-  path = `${GATEWAY_URL}${SERVICES_PATHS.PAYMENT}` + '/payment-providers';
+  path = `${GATEWAY_URL}${SERVICES_PATHS.PAYMENT}` + '/payments-providers';
 
   constructor(private http: HttpClient) { }
 
