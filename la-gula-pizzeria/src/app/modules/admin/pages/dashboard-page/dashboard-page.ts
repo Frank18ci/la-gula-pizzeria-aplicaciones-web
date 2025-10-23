@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { OrderService } from '../../../../shared/services/ordening/order-service';
 import OrderResponse from '../../../../shared/model/payment/response/orderPaymentResponse.model';
 import CustomerResponse from '../../../../shared/model/customer/response/customerResponse.model';
@@ -23,7 +23,8 @@ export class DashboardPage implements OnInit{
   constructor(
     private orderService: OrderService,
     private customerService: CustomerService,
-    private orderPaymentService: OrderPaymentService
+    private orderPaymentService: OrderPaymentService,
+    private cdRef: ChangeDetectorRef
   ) {
 
   }
@@ -37,6 +38,7 @@ export class DashboardPage implements OnInit{
       next: (orders: orderResponse[]) => {
         this.orders = orders;
         this.orderCount = orders.length;
+        this.cdRef.markForCheck();
       },
       error: (error) => {
         console.error('Error loading orders:', error);
@@ -48,6 +50,7 @@ export class DashboardPage implements OnInit{
       next: (customers: CustomerResponse[]) => {
         this.customers = customers;
         this.customerCount = customers.length;
+        this.cdRef.markForCheck();
       },
       error: (error) => {
         console.error('Error loading customers:', error);
@@ -59,6 +62,7 @@ export class DashboardPage implements OnInit{
       next: (ordersPayments: OrderPaymentResponse[]) => {
         this.ordersPayments = ordersPayments;
         this.totalRevenue = ordersPayments.reduce((sum, order) => sum + order.totalAmount, 0);
+        this.cdRef.markForCheck();
       },
       error: (error) => {
         console.error('Error loading order payments:', error);

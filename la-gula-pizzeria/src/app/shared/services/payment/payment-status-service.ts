@@ -9,7 +9,7 @@ import PaymentStatusRequest from '../../model/payment/request/paymentStatusReque
   providedIn: 'root'
 })
 export class PaymentStatusService {
-  path = `${GATEWAY_URL}${SERVICES_PATHS.PAYMENT}` + '/payment-statuses';
+  path = `${GATEWAY_URL}${SERVICES_PATHS.PAYMENT}` + '/payments-status';
 
   constructor(private http: HttpClient) { }
 

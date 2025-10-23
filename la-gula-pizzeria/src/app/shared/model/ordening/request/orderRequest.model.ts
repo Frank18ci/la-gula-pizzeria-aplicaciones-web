@@ -14,16 +14,16 @@ export default interface orderRequest {
     placedAt: string;
 }
 export enum OrderStatus {
-    pending,
-    in_progress,
-    completed,
-    canceled
+    pending = 'pending',
+    in_progress = 'in_progress',
+    completed = 'completed',
+    canceled = 'canceled'
 }
 export enum DeliveryMethod {
-    DELIVERY,
-    PICKUP
+    DELIVERY = 'DELIVERY',
+    PICKUP = 'PICKUP'
 }
 export enum PaymentStatus {
-    unpaid,
-    paid
+    unpaid = 'unpaid',
+    paid = 'paid'
 }

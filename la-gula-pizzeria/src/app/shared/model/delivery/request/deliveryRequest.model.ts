@@ -9,14 +9,14 @@ export default interface DeliveryRequest {
 }
 
 export enum DeliveryMethod {
-    DELIVERY,
-    PICKUP
+    DELIVERY = 'DELIVERY',
+    PICKUP = 'PICKUP'
 }
 
 export enum DeliveryStatus {
-    pending,
-    assigned,
-    en_route,
-    completed,
-    canceled
+    pending = 'pending',
+    assigned = 'assigned',
+    en_route = 'en_route',
+    completed = 'completed',
+    canceled = 'canceled'
 }

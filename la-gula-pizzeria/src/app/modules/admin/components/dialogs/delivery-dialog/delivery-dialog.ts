@@ -9,7 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import DeliveryRequest, { DeliveryMethod, DeliveryStatus } from '../../../../../shared/model/delivery/request/deliveryRequest.model';
 import DeliveryResponse from '../../../../../shared/model/delivery/response/deliveryResponse.model';
-import { DeliveryService } from '../../../../../shared/services/delivery/delivery-service';
+import orderResponse from '../../../../../shared/model/ordening/response/orderResponse.model';
+import AdressResponse from '../../../../../shared/model/customer/response/adressResponse.model';
+import { OrderService } from '../../../../../shared/services/ordening/order-service';
+import { AdressService } from '../../../../../shared/services/customer/adress-service';
 
 @Component({
   selector: 'app-delivery-dialog',
@@ -40,13 +43,15 @@ export class DeliveryDialog implements OnInit{
     instructions: ""
   }
   deliveryId?: number;
-  delivery: DeliveryResponse[] = [];
+  orders: orderResponse[] = [];
+  addresses: AdressResponse[] = [];
   constructor(
     private dialogRef: MatDialogRef<DeliveryDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DeliveryResponse,
     private fb: FormBuilder,
     private cdRef: ChangeDetectorRef,
-    private deliveryService: DeliveryService
+    private orderService: OrderService,
+    private adressService: AdressService
   ) {
     if(data) {
       this.deliveryRequest = {
@@ -67,27 +72,41 @@ export class DeliveryDialog implements OnInit{
       addressId: [this.deliveryRequest.addressId, [Validators.required]],
       method: [this.deliveryRequest.method, [Validators.required]],
       status: [this.deliveryRequest.status, [Validators.required]],
-      driverName: [this.deliveryRequest.driverName, [Validators.required]],
-      driverPhone: [this.deliveryRequest.driverPhone, [Validators.required]],
+      driverName: [this.deliveryRequest.driverName, []],
+      driverPhone: [this.deliveryRequest.driverPhone, []],
       instructions: [this.deliveryRequest.instructions, [Validators.required]]      
     });
-    this.deliveryService.getAllDeliveries().subscribe({
-      next: (delivery) => {
-        this.delivery = delivery;
-        if(this.deliveryRequest.orderId != 0){
+    
+    this.orderService.getAllOrders().subscribe({
+      next: (orders: orderResponse[]) => {
+        this.orders = orders;
+        if(this.deliveryRequest.orderId != 0) {
           this.form.patchValue({ orderId: this.deliveryRequest.orderId });
         }
         this.cdRef.markForCheck();
       },
       error: (error) => {
-        console.error('Error loading delivery:', error);
+        console.error('Error loading orders:', error);
       }
-    }); 
+    });
+    this.adressService.getAllAdresses().subscribe({
+      next: (addresses: AdressResponse[]) => {
+        this.addresses = addresses;
+        if(this.deliveryRequest.addressId != 0) {
+          this.form.patchValue({ addressId: this.deliveryRequest.addressId });
+        }
+        this.cdRef.markForCheck();
+      },
+      error: (error) => {
+        console.error('Error loading address:', error);
+      }
+    });
   }
   saveDelivery(): void {
     if(this.form.invalid) {
       return;
     }
+    
     const deliveryData: DeliveryRequest = {
       ...this.deliveryRequest,
       ...this.form.value

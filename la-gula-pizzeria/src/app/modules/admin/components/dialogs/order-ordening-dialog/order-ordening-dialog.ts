@@ -12,6 +12,10 @@ import { DeliveryMethod } from '../../../../../shared/model/delivery/request/del
 import CustomerResponse from '../../../../../shared/model/customer/response/customerResponse.model';
 import { OrderService } from '../../../../../shared/services/ordening/order-service';
 import orderResponse from '../../../../../shared/model/ordening/response/orderResponse.model';
+import { UserService } from '../../../../../shared/services/user/user-service';
+import UserResponse from '../../../../../shared/model/user/response/userResponse.model';
+import { AdressService } from '../../../../../shared/services/customer/adress-service';
+import AdressResponse from '../../../../../shared/model/customer/response/adressResponse.model';
 
 @Component({
   selector: 'app-order-ordening-dialog',
@@ -48,14 +52,15 @@ export class OrderOrdeningDialog implements OnInit{
     placedAt: ''
   }
   orderId?: number;
-  orders: orderResponse[] = [];
-
+  users: UserResponse[] = [];
+  addresses: AdressResponse[] = [];
   constructor(
     private dialogRef: MatDialogRef<OrderOrdeningDialog>,
     @Inject(MAT_DIALOG_DATA) public data: orderResponse,
     private fb: FormBuilder,
     private cdRef: ChangeDetectorRef,
-    private orderService: OrderService
+    private userService: UserService,
+    private adressService: AdressService
   ) {
     if(data) {
       this.orderRequest = {
@@ -66,7 +71,6 @@ export class OrderOrdeningDialog implements OnInit{
         deliveryMethod: DeliveryMethod[data.deliveryMethod as keyof typeof DeliveryMethod] ?? DeliveryMethod.DELIVERY,
         notes: data.notes ?? '',
         subtotal: data.subtotal ?? 0,
-        
         tax: data.tax ?? 0,
         deliveryFee: data.deliveryFee ?? 0,
         discountTotal: data.discountTotal ?? 0,
@@ -93,25 +97,37 @@ export class OrderOrdeningDialog implements OnInit{
       paymentStatus: [this.orderRequest.paymentStatus, [Validators.required]],
       placedAt: [this.orderRequest.placedAt, [Validators.required]]     
     });
-    this.orderService.getAllOrders().subscribe({
-      next: (orders) => {
-        this.orders = orders;
-        if(this.orderRequest.customerId != 0){
+    this.userService.getAllUsers().subscribe({
+      next: (customers: UserResponse[]) => {
+        this.users = customers;
+        if(this.orderRequest.customerId != 0) {
           this.form.patchValue({ customerId: this.orderRequest.customerId });
         }
         this.cdRef.markForCheck();
       },
       error: (error) => {
-        console.error('Error loading delivery:', error);
+        console.error('Error loading customers:', error);
       }
-    }); 
+    });
+    this.adressService.getAllAdresses().subscribe({
+      next: (addresses: AdressResponse[]) => {
+        this.addresses = addresses;
+        if(this.orderRequest.addressId != 0) {
+          this.form.patchValue({ addressId: this.orderRequest.addressId });
+        }
+        this.cdRef.markForCheck();
+      },
+      error: (error) => {
+        console.error('Error loading address:', error);
+      }
+    });
   }
   
   saveOrder(): void {
     if (this.form.invalid) return;
 
     this.form.value.placedAt = new Date(this.form.value.placedAt).toISOString();
-    const orderData: orderResponse = {
+    const orderData: orderRequest = {
       ...this.orderRequest,
       ...this.form.value
     };

@@ -20,10 +20,8 @@ public record DeliveryRequest(
         @NotNull(message = "El estado de la entrega es obligatorio")
         DeliveryStatus status,
 
-        @NotBlank(message = "El nombre del conductor es obligatorio")
         String driverName,
 
-        @NotBlank(message = "El teléfono del conductor es obligatorio")
         String driverPhone,
 
         @NotBlank(message = "Las instrucciones son obligatorias")

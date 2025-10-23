@@ -15,7 +15,7 @@ import PaymentResponse from '../../../../shared/model/payment/response/paymentRe
   styleUrl: './payments-page.css'
 })
 export class PaymentsPage {
-  displayedColumns: string[] = ['id', 'paymentStatus', 'currency', 'paymentStatusName', 'amount','createdAt', 'Acciones'];
+  displayedColumns: string[] = ['id', 'orderId', 'amount', 'providerName', 'paymentStatusName','processedAt', 'Acciones'];
   dataSource = new MatTableDataSource<PaymentResponse>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(

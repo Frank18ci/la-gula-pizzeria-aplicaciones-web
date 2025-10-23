@@ -17,7 +17,7 @@ public class PaymentStatusController {
         return ResponseEntity.ok(paymentStatusService.getAllPaymentStatuses());
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(Long id) {
+    public ResponseEntity<?> findById(@PathVariable Long id) {
         return ResponseEntity.ok(paymentStatusService.getPaymentStatusById(id));
     }
     @PostMapping

@@ -4,22 +4,22 @@
         <!-- Columna izquierda -->
         <div class="flex flex-col gap-4">
 
-            <!--<mat-form-field class="w-full *:px-3">
+            <mat-form-field class="w-full *:px-3">
                 <mat-label>Nro. Orden</mat-label>
-                <mat-select formControlName="orderId" name="orderId">
-                    @for (delivery of delivery; track delivery.id) {
-                      <mat-option [value]="delivery.id">{{delivery.orderId}}</mat-option>
+                <mat-select formControlName="orderId" name="orderId" required>
+                    @for (orden of orders; track orden.id) {
+                        <mat-option [value]="orden.id">{{ orden.orderNumber }}</mat-option>
                     }
                 </mat-select>
-            </mat-form-field>-->
-            <mat-form-field class="w-full *:px-3">
-                <mat-label>Nro. Nro. Orden</mat-label>
-                <input matInput type="number" formControlName="orderId" name="orderId" required>
             </mat-form-field>
 
             <mat-form-field class="w-full *:px-3">
-                <mat-label>Nro. Dirección</mat-label>
-                <input matInput type="number" formControlName="addressId" name="addressId" required>
+                <mat-label>Dirección</mat-label>
+                <mat-select formControlName="addressId" name="addressId" required>
+                    @for (address of addresses; track address.id) {
+                        <mat-option [value]="address.id">{{ address.street }}, {{ address.city }}</mat-option>
+                    }
+                </mat-select>
             </mat-form-field>
 
             <mat-form-field class="w-full *:px-3">
@@ -40,7 +40,6 @@
             <mat-form-field class="w-full *:px-3">
                 <mat-label>Status</mat-label>
                 <mat-select formControlName="status" name="status" required>
-                
                     <mat-option [value]="'pending'">Pendiente</mat-option>
                     <mat-option [value]="'assigned'">Asignado</mat-option>
                     <mat-option [value]="'en_route'">En ruta</mat-option>
@@ -51,12 +50,12 @@
 
             <mat-form-field class="w-full *:px-3">
                 <mat-label>Nombre de conductor</mat-label>
-                <input matInput formControlName="driverName" name="driverName" required>
+                <input matInput formControlName="driverName" name="driverName" >
             </mat-form-field>
 
             <mat-form-field class="w-full *:px-3">
                 <mat-label>Num. Conductor</mat-label>
-                <textarea matInput formControlName="driverPhone" name="driverPhone" required ></textarea>
+                <input matInput formControlName="driverPhone" name="driverPhone" >
             </mat-form-field>
 
             <mat-form-field class="w-full *:px-3">
