@@ -70,30 +70,32 @@ CREATE TABLE IF NOT EXISTS pizza_default_toppings (
 
 -- INSETANDO VALORES 
 
-INSERT INTO sizes (name, diameter_cm, price_multiplier) VALUES 
+INSERT INTO sizes (name, diameter_cm, price_multiplier) VALUES
 ('Personal', 20.00, 1.000),
 ('Mediana', 30.00, 1.500),
 ('Familiar', 40.00, 2.000);
 
-INSERT INTO dough_types (name, is_gluten_free, extra_price) VALUES 
+INSERT INTO dough_types (name, is_gluten_free, extra_price) VALUES
 ('Tradicional', FALSE, 0.00),
 ('Delgada', FALSE, 1.00),
 ('Integral', TRUE, 1.50);
 
-INSERT INTO toppings (name, category, is_vegetarian, base_price) VALUES 
-('Pepperoni', 'Carne', FALSE, 2.00),
-('Champiñón', 'Vegetal', TRUE, 1.50),
-('Cebolla', 'Vegetal', TRUE, 1.00),
-('Jalapeño', 'Vegetal', TRUE, 1.50),
-('Queso Extra', 'Queso', TRUE, 2.50);
+INSERT INTO toppings (name, category, is_vegetarian, base_price, image) VALUES
+('Pepperoni', 'Carne', FALSE, 2.00, 'pepperoni.jpg'),
+('Champiñón', 'Vegetal', TRUE, 1.50, 'champinon.jpg'),
+('Cebolla', 'Vegetal', TRUE, 1.00, 'cebolla.jpg'),
+('Jalapeño', 'Vegetal', TRUE, 1.50, 'jalapeno.jpg'),
+('Queso Extra', 'Queso', TRUE, 2.50, 'queso_extra.jpg');
 
-INSERT INTO pizzas (name, description, base_price) VALUES 
-('Margarita', 'Salsa de tomate, mozzarella y albahaca fresca', 8.00),
-('Hawaiana', 'Salsa de tomate, mozzarella, jamón y piña', 10.00),
-('Pepperoni', 'Salsa de tomate, mozzarella y pepperoni', 9.00),
-('Vegetariana', 'Salsa de tomate, mozzarella y variedad de vegetales', 11.00);
+INSERT INTO pizzas ( name, image, base_price) VALUES
+('Margherita', 'margherita.jpg', 12.99),
+('Pepperoni', 'peperoni.jpg', 14.99),
+('Vegetariana', 'vegetariano.jpg', 13.49),
+('Hawaiana', 'hawa.jpg', 15.00),
+('4 Quesos', 'quesos.jpg', 16.50),
+('Mixto', 'mixta.jpg', 17.25);
 
-INSERT INTO pizza_default_toppings (pizza_id, topping_id) VALUES 
+INSERT INTO pizza_default_toppings (pizza_id, topping_id) VALUES
 (1, 5),  -- Margarita tiene Queso Extra
 (2, 5),  -- Hawaiana tiene Queso Extra
 (2, 3),  -- Hawaiana tiene Cebolla

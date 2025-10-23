@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PizzaService } from '../../../../shared/services/catalog/pizza-service';
 import { SizeService } from '../../../../shared/services/catalog/size-service';
@@ -7,6 +7,8 @@ import { ToppingService } from '../../../../shared/services/catalog/topping-serv
 import PizzaResponse from '../../../../shared/model/catalog/response/pizzaResponse.model';
 import { MaterialModule } from '../../../../shared/modules/material-module.module';
 import { CommonModule } from '@angular/common';
+import ToppingResponse from '../../../../shared/model/catalog/response/toppingResponse.model';
+import { RootImagePizza, RootImageTopping } from '../../../../shared/storage/RootImagen';
 
 
 interface CheeseOption {
@@ -22,11 +24,22 @@ interface CheeseOption {
 })
 export class DetailsPizzaComponent  implements OnInit {
   
-    pizza! : PizzaResponse;
+    pizza: PizzaResponse = {
+      id: 0,
+      name: '',
+      description: '',
+      image: '',
+      basePrice: 0,
+      toppings: [],
+      active: false
+    };
     pizzaId!: number;
     sizes: any[] = [];
     doughs: any[] = [];
-    toppings: any[] = [];
+    toppings: ToppingResponse[] = [];
+
+    rootImagePizza = RootImagePizza;
+    rootImageTopping = RootImageTopping;
     
 
   cheeses: CheeseOption[] = [
@@ -48,7 +61,8 @@ export class DetailsPizzaComponent  implements OnInit {
     private sizeService: SizeService,
     private doughService: DoughTypeService,
     private toppingService: ToppingService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ){}
 
 
@@ -60,6 +74,7 @@ export class DetailsPizzaComponent  implements OnInit {
         this.pizza = data;
         this.selectedToppings = [...(data.toppings || [])];
         this.updatePrice();
+        this.cdr.detectChanges();
       }
     });
 
@@ -67,16 +82,19 @@ export class DetailsPizzaComponent  implements OnInit {
       this.sizes = sizes;
       this.selectedSize = this.sizes[0];
       this.updatePrice();
+      this.cdr.detectChanges();
     });
 
     this.doughService.getAllDoughTypes().subscribe(doughs => {
       this.doughs = doughs;
       this.selectedDough = this.doughs[0];
       this.updatePrice();
+      this.cdr.detectChanges();
     });
 
     this.toppingService.getAllToppings().subscribe(toppings => {
       this.toppings = toppings;
+      this.cdr.detectChanges();
     });
 
     this.selectedCheese = this.cheeses[0];

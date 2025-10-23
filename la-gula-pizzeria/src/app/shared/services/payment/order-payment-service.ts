@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { GATEWAY_URL, SERVICES_PATHS } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import OrderPaymentResponse from '../../model/payment/response/orderPaymentResponse.model';
 import OrderPaymentRequest from '../../model/payment/request/orderPaymentRequest.model';
+import OrderPaymentResponse from '../../model/payment/response/orderPaymentResponse.model';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class OrderService {
+export class OrderPaymentService {
   path = `${GATEWAY_URL}${SERVICES_PATHS.PAYMENT}` + '/orders';
 
   constructor(private http: HttpClient) { }

@@ -1,4 +1,4 @@
-import OrderResponse from "./orderResponse.model";
+import OrderResponse from "./orderPaymentResponse.model";
 import PaymentProviderResponse from "./paymentProviderResponse.model";
 import PaymentStatusResponse from "./paymentStatusResponse.model";
 
