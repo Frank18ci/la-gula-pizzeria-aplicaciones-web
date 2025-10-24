@@ -27,6 +27,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatSliderModule } from '@angular/material/slider';
 
 const materialModules = [
   MatMenuModule,
@@ -55,10 +56,8 @@ const materialModules = [
   MatNativeDateModule,
   MatSlideToggleModule,
   MatAutocompleteModule,
-  MatIconModule,
-  MatButtonToggleModule
-  
-  
+  MatButtonToggleModule,
+  MatSliderModule
 ];
 @NgModule({
   declarations: [],

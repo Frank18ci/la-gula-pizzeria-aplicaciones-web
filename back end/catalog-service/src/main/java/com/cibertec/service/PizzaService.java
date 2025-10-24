@@ -11,4 +11,6 @@ public interface PizzaService {
     PizzaResponse createPizza(PizzaRequest pizzaRequest);
     PizzaResponse updatePizza(Long id, PizzaRequest pizzaRequest);
     void deletePizza(Long id);
+
+    List<PizzaResponse> getAllPizzasByPriceBetweenAndSizeIdAndDoughTypeId(Double minPrice, Double maxPrice, Long sizeId, Long doughTypeId);
 }

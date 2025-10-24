@@ -74,6 +74,9 @@ export class DetailsPizzaComponent  implements OnInit {
       next: data => {
         this.pizza = data;
         this.selectedToppings = [...(data.toppings || [])];
+        console.log(this.selectedToppings);
+        console.log(data);
+        console.log(this.totalPrice);
         this.updatePrice();
         this.cdr.detectChanges();
       }
@@ -110,7 +113,7 @@ export class DetailsPizzaComponent  implements OnInit {
     }
     this.updatePrice();
   }
-
+  priceRange = 0;
   updatePrice() {
     if (!this.pizza) return;
 

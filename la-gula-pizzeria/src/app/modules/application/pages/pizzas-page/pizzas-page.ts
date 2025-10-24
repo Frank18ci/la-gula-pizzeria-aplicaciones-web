@@ -6,55 +6,69 @@ import { RootImagePizza } from '../../../../shared/storage/RootImagen';
 import { MaterialModule } from '../../../../shared/modules/material-module.module';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSliderModule } from '@angular/material/slider';
+import SizeResponse from '../../../../shared/model/catalog/response/SizeResponse.model';
+import { SizeService } from '../../../../shared/services/catalog/size-service';
+import DoughTypeResponse from '../../../../shared/model/catalog/response/doughTypeResponse.model';
+import { DoughTypeService } from '../../../../shared/services/catalog/dough-type-service';
 
 @Component({
   selector: 'app-pizzas-page',
-  imports: [CommonModule,MaterialModule,FormsModule,RouterModule],
+  standalone: true,
+  imports: [CommonModule, MaterialModule, FormsModule, RouterModule,
+      MatSliderModule, 
+    MatCheckboxModule, 
+    MatButtonModule,   
+    MatIconModule 
+  ],
   templateUrl: './pizzas-page.html',
-  styleUrl: './pizzas-page.css'
+  styleUrls: ['./pizzas-page.css']
 })
 export class PizzasPageComponent implements OnInit{
-  
-   pizzas: PizzaResponse[] = [];
+  pizzas: PizzaResponse[] = [];
   filteredPizzas: PizzaResponse[] = [];
   rootImagePizza = RootImagePizza;
   
- priceRange: number = 100;
-    sizes = [
-      { name: 'Small', selected: false },
-      { name: 'Medium', selected: false },
-      { name: 'Large', selected: false }
-    ];
-    doughs = [
-      { name: 'Thin', selected: false },
-      { name: 'Thick', selected: false }
-    ];
+  priceRange: number = 150;
+  sizes: SizeResponse[] = [];
+  sizeSelected: boolean = false;
+  doughs: DoughTypeResponse[] = [];
+  doughSelected: boolean = false;
 
   constructor(
     private pizzaService: PizzaService,
     private router: Router,
+    private sizeService: SizeService,
+    private doughTypeService: DoughTypeService,
     private cdr: ChangeDetectorRef
   ) {}
 
- // ngOnInit(): void {
-  //  this.loadPizza();
- // }
-
- // loadPizza(){
-    // this.pizzaService.getAllPizzas().subscribe({
-          //next: (pizzas: PizzaResponse[]) => {
-        //    this.pizzas = pizzas;
-        //    this.cdr.detectChanges();
-      //    },
-    //      error: (err) => console.error(err)
-   //     });
-//}
- ngOnInit() {
+  ngOnInit() {
+    // priceRange is already initialized on the field; ensure pizzas load asynchronously
     this.pizzaService.getAllPizzas().subscribe({
       next: data => {
         this.pizzas = data;
         this.filteredPizzas = [...this.pizzas];
-      }
+        this.cdr.detectChanges();
+      },
+      error: err => console.error(err)
+    });
+    this.sizeService.getAllSizes().subscribe({
+      next: data => {
+        this.sizes = data;
+        this.cdr.detectChanges();
+      },
+      error: err => console.error(err)
+    });
+    this.doughTypeService.getAllDoughTypes().subscribe({
+      next: data => {
+        this.doughs = data;
+        this.cdr.detectChanges();
+      },
+      error: err => console.error(err)
     });
   }
 
@@ -64,10 +78,13 @@ export class PizzasPageComponent implements OnInit{
     );
   }
 
+  onPriceRangeChange(value: number) {
+    this.priceRange = value;
+    this.filterPizzas();
+  }
+
   clearFilters() {
     this.priceRange = 100;
-    this.sizes.forEach(s => s.selected = false);
-    this.doughs.forEach(d => d.selected = false);
     this.filteredPizzas = [...this.pizzas];
   }
 }

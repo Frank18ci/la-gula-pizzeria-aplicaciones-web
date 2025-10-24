@@ -43,4 +43,12 @@ public class PizzaController {
     public ResponseEntity<?> getImage(@PathVariable String image) {
         return imageStorageService.obtainImage(image, TypeStorageEnum.PIZZA);
     }
+    @GetMapping("search")
+    public ResponseEntity<?> geAllPizzasByPriceBetweenAndSizeIdAndDoughTypeId(
+            @RequestParam Double minPrice,
+            @RequestParam Double maxPrice,
+            @RequestParam Long sizeId,
+            @RequestParam Long doughTypeId) {
+        return ResponseEntity.ok(pizzaService.getAllPizzasByPriceBetweenAndSizeIdAndDoughTypeId(minPrice, maxPrice, sizeId, doughTypeId));
+    }
 }
