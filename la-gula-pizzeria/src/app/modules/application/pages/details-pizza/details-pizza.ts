@@ -9,6 +9,7 @@ import { MaterialModule } from '../../../../shared/modules/material-module.modul
 import { CommonModule } from '@angular/common';
 import ToppingResponse from '../../../../shared/model/catalog/response/toppingResponse.model';
 import { RootImagePizza, RootImageTopping } from '../../../../shared/storage/RootImagen';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 interface CheeseOption {
@@ -18,7 +19,7 @@ interface CheeseOption {
 
 @Component({
   selector: 'app-details-pizza',
-  imports: [CommonModule,MaterialModule],
+  imports: [CommonModule,MaterialModule,FormsModule, ReactiveFormsModule],
   templateUrl: './details-pizza.html',
   styleUrls: ['./details-pizza.css']
 })
@@ -48,9 +49,9 @@ export class DetailsPizzaComponent  implements OnInit {
       { name: 'Parmesan', extraPrice: 2 }
   ];
 
-  selectedSize!: any;
-  selectedDough!: any;
-  selectedCheese!: CheeseOption;
+  selectedSize: any = null;
+  selectedDough: any = null;
+  selectedCheese: CheeseOption | null = null;
   selectedToppings: any[] = [];
 
   totalPrice: number = 0;
@@ -134,6 +135,16 @@ export class DetailsPizzaComponent  implements OnInit {
       totalPrice: this.totalPrice
     });
   }
+
+getToppingsTotal(): number {
+ if (!this.selectedToppings?.length) return 0;
+  return this.selectedToppings.reduce((a, b) => a + (b.basePrice || 0), 0);
+}
+
+isToppingSelected(topping: any): boolean {
+  return this.selectedToppings?.some(t => t.id === topping.id) || false;
+}
+
 
   orderNow() {
     this.addToCart();

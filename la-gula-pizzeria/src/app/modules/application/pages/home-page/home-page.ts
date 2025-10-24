@@ -14,6 +14,7 @@ import { FormsModule } from "@angular/forms";
   styleUrls: ['./home-page.css']
 })
 export class HomePage  implements OnInit {
+  
   rootImagePizza = RootImagePizza;
   pizzas : PizzaResponse[] = []; 
 
