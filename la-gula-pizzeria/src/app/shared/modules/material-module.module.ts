@@ -26,6 +26,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatCardModule} from '@angular/material/card';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 const materialModules = [
   MatMenuModule,
@@ -54,7 +55,8 @@ const materialModules = [
   MatNativeDateModule,
   MatSlideToggleModule,
   MatAutocompleteModule,
-  MatIconModule
+  MatIconModule,
+  MatButtonToggleModule
   
   
 ];
