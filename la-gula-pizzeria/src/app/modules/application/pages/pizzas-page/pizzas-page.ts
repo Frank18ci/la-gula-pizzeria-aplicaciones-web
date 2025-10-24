@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PizzaService } from '../../../../shared/services/catalog/pizza-service';
 import { CommonModule } from '@angular/common';
 import PizzaResponse from '../../../../shared/model/catalog/response/pizzaResponse.model';
@@ -10,6 +10,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
+import SizeResponse from '../../../../shared/model/catalog/response/SizeResponse.model';
+import { SizeService } from '../../../../shared/services/catalog/size-service';
+import DoughTypeResponse from '../../../../shared/model/catalog/response/doughTypeResponse.model';
+import { DoughTypeService } from '../../../../shared/services/catalog/dough-type-service';
 
 @Component({
   selector: 'app-pizzas-page',
@@ -27,21 +31,19 @@ export class PizzasPageComponent implements OnInit{
   pizzas: PizzaResponse[] = [];
   filteredPizzas: PizzaResponse[] = [];
   rootImagePizza = RootImagePizza;
-
+  
   priceRange: number = 150;
-  sizes = [
-    { name: 'Small', selected: false },
-    { name: 'Medium', selected: false },
-    { name: 'Large', selected: false }
-  ];
-  doughs = [
-    { name: 'Thin', selected: false },
-    { name: 'Thick', selected: false }
-  ];
+  sizes: SizeResponse[] = [];
+  sizeSelected: boolean = false;
+  doughs: DoughTypeResponse[] = [];
+  doughSelected: boolean = false;
 
   constructor(
     private pizzaService: PizzaService,
-    private router: Router
+    private router: Router,
+    private sizeService: SizeService,
+    private doughTypeService: DoughTypeService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -50,6 +52,21 @@ export class PizzasPageComponent implements OnInit{
       next: data => {
         this.pizzas = data;
         this.filteredPizzas = [...this.pizzas];
+        this.cdr.detectChanges();
+      },
+      error: err => console.error(err)
+    });
+    this.sizeService.getAllSizes().subscribe({
+      next: data => {
+        this.sizes = data;
+        this.cdr.detectChanges();
+      },
+      error: err => console.error(err)
+    });
+    this.doughTypeService.getAllDoughTypes().subscribe({
+      next: data => {
+        this.doughs = data;
+        this.cdr.detectChanges();
       },
       error: err => console.error(err)
     });
@@ -68,8 +85,6 @@ export class PizzasPageComponent implements OnInit{
 
   clearFilters() {
     this.priceRange = 100;
-    this.sizes.forEach(s => s.selected = false);
-    this.doughs.forEach(d => d.selected = false);
     this.filteredPizzas = [...this.pizzas];
   }
 }

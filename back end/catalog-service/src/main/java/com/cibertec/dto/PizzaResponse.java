@@ -16,6 +16,7 @@ public record PizzaResponse(
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
         List<ToppingResponse> toppings,
+        List<SizeResponse> sizes,
         String image
 ) {
 }

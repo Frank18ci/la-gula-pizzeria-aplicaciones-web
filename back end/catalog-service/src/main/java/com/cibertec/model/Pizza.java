@@ -41,4 +41,11 @@ public class Pizza {
             inverseJoinColumns = @JoinColumn(name = "topping_id")
     )
     private List<Topping> toppings;
+    @ManyToMany
+    @JoinTable(
+            name = "pizza_sizes",
+            joinColumns = @JoinColumn(name = "pizza_id"),
+            inverseJoinColumns = @JoinColumn(name = "size_id")
+    )
+    private List<Size> sizes;
 }

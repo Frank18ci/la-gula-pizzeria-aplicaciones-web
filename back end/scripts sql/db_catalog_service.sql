@@ -67,6 +67,13 @@ CREATE TABLE IF NOT EXISTS pizza_default_toppings (
   CONSTRAINT fk_pizza_default_toppings_pizza FOREIGN KEY (pizza_id) REFERENCES pizzas(id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT fk_pizza_default_toppings_topping FOREIGN KEY (topping_id) REFERENCES toppings(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+CREATE TABLE IF NOT EXISTS pizza_sizes (
+  pizza_id BIGINT NOT NULL,
+  size_id BIGINT NOT NULL,
+  PRIMARY KEY (pizza_id, size_id),
+  CONSTRAINT fk_pizza_sizes_pizza FOREIGN KEY (pizza_id) REFERENCES pizzas(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_pizza_sizes_size FOREIGN KEY (size_id) REFERENCES sizes(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 -- INSETANDO VALORES 
 
@@ -105,4 +112,15 @@ INSERT INTO pizza_default_toppings (pizza_id, topping_id) VALUES
 (4, 3),  -- Vegetariana tiene Cebolla
 (4, 4),  -- Vegetariana tiene Jalapeño
 (4, 5);  -- Vegetariana tiene Queso Extra
+
+INSERT INTO pizza_sizes (pizza_id, size_id) VALUES
+(1, 1),
+(2, 2),
+(2, 3),
+(3, 2),
+(3, 3),
+(4, 1),
+(4, 2),
+(4, 1),
+(4, 2);
 

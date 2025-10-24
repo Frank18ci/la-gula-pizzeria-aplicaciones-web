@@ -83,4 +83,9 @@ public class PizzaServiceImpl implements PizzaService {
         );
         pizzaRepository.delete(pizzaFound);
     }
+
+    @Override
+    public List<PizzaResponse> getAllPizzasByPriceBetweenAndSizeIdAndDoughTypeId(Double minPrice, Double maxPrice, Long sizeId, Long doughTypeId) {
+        return List.of();
+    }
 }

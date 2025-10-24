@@ -17,7 +17,7 @@
       <label class="font-medium text-gray-700">Size</label>
       <div class="flex flex-col gap-2 mt-3">
         <div *ngFor="let size of sizes; let i = index">
-          <mat-checkbox [(ngModel)]="size.selected" name="size-{{i}}" (change)="filterPizzas()" class="text-gray-700">
+          <mat-checkbox [(ngModel)]="sizeSelected" name="size-{{i}}" (change)="filterPizzas()" class="text-gray-700">
             {{ size.name }}
           </mat-checkbox>
         </div>
@@ -30,13 +30,12 @@
       <label class="font-medium text-gray-700">Dough Type</label>
       <div class="flex flex-col gap-2 mt-3">
         <div *ngFor="let dough of doughs; let j = index">
-          <mat-checkbox [(ngModel)]="dough.selected" name="dough-{{j}}" (change)="filterPizzas()" class="text-gray-700">
+          <mat-checkbox [(ngModel)]="doughSelected" name="dough-{{j}}" (change)="filterPizzas()" class="text-gray-700">
             {{ dough.name }}
           </mat-checkbox>
         </div>
       </div>
     </div>
-
 
     <button mat-stroked-button color="warn" class="w-full mt-6 border-red-300 hover:bg-red-50 rounded-xl"
       (click)="clearFilters()">

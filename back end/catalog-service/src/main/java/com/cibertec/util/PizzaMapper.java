@@ -17,7 +17,7 @@ import java.util.List;
  * Utiliza ToppingMapper para mapear los toppings asociados a una pizza.
  * @author Frank
  */
-@Mapper(componentModel = "spring", uses = {ToppingMapper.class})
+@Mapper(componentModel = "spring", uses = {ToppingMapper.class, PizzaMapper.class})
 public interface PizzaMapper {
     @Mapping(source = "toppingIds", target = "toppings")
     @Mapping(source = "image", target = "image", qualifiedByName = "extractPizzaImageName")
