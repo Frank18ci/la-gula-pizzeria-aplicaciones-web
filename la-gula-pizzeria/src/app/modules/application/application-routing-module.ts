@@ -5,6 +5,8 @@ import { HomePage } from './pages/home-page/home-page';
 import { DetailsPizzaComponent } from './pages/details-pizza/details-pizza';
 import { PizzasPageComponent } from './pages/pizzas-page/pizzas-page';
 import { PerfilPage } from './pages/perfil-page/perfil-page';
+import { ContactPage } from './pages/contact-page/contact-page';
+import { CarritoPage } from './pages/carrito-page/carrito-page';
 
 
 
@@ -17,6 +19,8 @@ const routes: Routes = [
       {path: 'pizza-details/:id', component: DetailsPizzaComponent },
       {path: 'pizzas', component: PizzasPageComponent},
       {path: 'profile', component: PerfilPage},
+      {path: 'contacto', component: ContactPage},
+      {path: 'carrito', component: CarritoPage},
       {path: '**',redirectTo: 'home'},
     ]
   }

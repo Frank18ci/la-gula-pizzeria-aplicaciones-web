@@ -21,6 +21,7 @@ public record PizzaRequest(
         @NotNull(message = "El active no puede estar vacío")
         Boolean active,
         List<Long> toppingIds,
+        List<Long> sizeIds,
         MultipartFile image
 ) {
 }

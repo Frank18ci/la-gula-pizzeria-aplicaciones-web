@@ -120,7 +120,5 @@ INSERT INTO pizza_sizes (pizza_id, size_id) VALUES
 (3, 2),
 (3, 3),
 (4, 1),
-(4, 2),
-(4, 1),
 (4, 2);
 

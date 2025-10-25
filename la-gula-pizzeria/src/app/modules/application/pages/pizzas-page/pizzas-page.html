@@ -1,49 +1,51 @@
 <div class="flex bg-[#fff7ed] min-h-screen">
-
-  <aside class="w-72 bg-[#fffaf3] shadow-sm border-r border-orange-100 p-6">
-    <h2 class="text-xl font-semibold mb-8 text-gray-800 tracking-wide">Filters</h2>
-
-
-    <div class="mb-8">
-      <label class="font-medium text-gray-700">Price</label>
-      <mat-slider min="200" max="500">
-        <input value="300" matSliderStartThumb>
-        <input value="400" matSliderEndThumb>
-      </mat-slider>
-    </div>
-
+  <form [formGroup]="form">
+    <aside class="w-72 bg-[#fffaf3] shadow-sm border-r border-orange-100 p-6">
+      <h2 class="text-xl font-semibold mb-8 text-gray-800 tracking-wide">Filters</h2>
 
     <div class="mb-8">
-      <label class="font-medium text-gray-700">Size</label>
-      <div class="flex flex-col gap-2 mt-3">
-        <div *ngFor="let size of sizes; let i = index">
-          <mat-checkbox [(ngModel)]="sizeSelected" name="size-{{i}}" (change)="filterPizzas()" class="text-gray-700">
-            {{ size.name }}
-          </mat-checkbox>
-        </div>
-
+        <label class="font-medium text-gray-700">Price</label>
+        <mat-slider min="0" max="100" style="width: 100%;">
+          <input formControlName="minPrice" (change)="filterPizzas()" matSliderStartThumb>
+          <input formControlName="maxPrice" (change)="filterPizzas()" matSliderEndThumb>
+        </mat-slider>
+        <div class="flex justify-between mt-2">
+            <span>Min: {{ form.value.minPrice }}</span>
+            <span>Max: {{ form.value.maxPrice }}</span>
+          </div>
       </div>
-    </div>
 
 
-    <div class="mb-8">
-      <label class="font-medium text-gray-700">Dough Type</label>
-      <div class="flex flex-col gap-2 mt-3">
-        <div *ngFor="let dough of doughs; let j = index">
-          <mat-checkbox [(ngModel)]="doughSelected" name="dough-{{j}}" (change)="filterPizzas()" class="text-gray-700">
-            {{ dough.name }}
-          </mat-checkbox>
+      <div class="mb-8">
+        <label class="font-medium text-gray-700">Size</label>
+        <div class="flex flex-col gap-2 mt-3">
+          <mat-radio-group formControlName="sizeId" (change)="filterPizzas()">
+            <mat-radio-button *ngFor="let size of sizes" [value]="size.id">
+              {{ size.name }}
+            </mat-radio-button>
+          </mat-radio-group>
         </div>
       </div>
-    </div>
-
-    <button mat-stroked-button color="warn" class="w-full mt-6 border-red-300 hover:bg-red-50 rounded-xl"
-      (click)="clearFilters()">
-      Clear Filters
-    </button>
-  </aside>
 
 
+      <div class="mb-8">
+        <label class="font-medium text-gray-700">Toppings</label>
+        <div class="flex flex-col gap-2 mt-3">
+          <mat-radio-group formControlName="toppingId" (change)="filterPizzas()">
+            <mat-radio-button *ngFor="let topping of toppings" [value]="topping.id">
+              {{ topping.name }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+
+      <button mat-stroked-button color="warn" class="w-full mt-6 border-red-300 hover:bg-red-50 rounded-xl"
+        (click)="clearFilters()">
+        Clear Filters
+      </button>
+    </aside>
+
+  </form>
   <main class="flex-1 bg-[#fff7ed] px-10 py-10">
 
     <div class="flex items-center justify-between mb-8">
@@ -51,9 +53,9 @@
     </div>
 
 
-    <div *ngIf="filteredPizzas.length > 0; else noPizzas">
+    <div *ngIf="pizzas.length > 0; else noPizzas">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div *ngFor="let pizza of filteredPizzas"
+        <div *ngFor="let pizza of pizzas"
           class="bg-white border border-orange-100 rounded-2xl shadow-sm hover:shadow-lg transition-all p-6 text-center">
           <img [src]="rootImagePizza + pizza.image" alt="{{ pizza.name }}"
             class="w-40 h-40 mx-auto rounded-full object-cover mb-4 shadow-sm" />
@@ -64,17 +66,13 @@
             {{ pizza.description }}
           </p>
           <p class="text-green-600 font-semibold mb-5">
-            Starts at {{ pizza.basePrice | currency }}
+            Starts at {{ pizza.basePrice | currency:'S/. ':'symbol-narrow':'1.2-2' }}
           </p>
 
           <div class="flex justify-center gap-3">
             <button mat-stroked-button color="primary" [routerLink]="['/application/pizza-details', pizza.id]"
               class="rounded-xl">
               View
-            </button>
-            <button mat-raised-button color="accent" class="rounded-xl">
-              <mat-icon>add_shopping_cart</mat-icon>
-              Add
             </button>
           </div>
         </div>

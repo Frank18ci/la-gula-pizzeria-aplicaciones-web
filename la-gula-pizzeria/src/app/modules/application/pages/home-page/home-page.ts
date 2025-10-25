@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MaterialModule } from '../../../../shared/modules/material-module.module';
 import { Router } from '@angular/router';
 import PizzaResponse from '../../../../shared/model/catalog/response/pizzaResponse.model';
@@ -14,6 +14,7 @@ import { FormsModule } from "@angular/forms";
   styleUrls: ['./home-page.css']
 })
 export class HomePage  implements OnInit {
+  @ViewChild('scroller') scroller!: ElementRef<HTMLDivElement>;
   
   rootImagePizza = RootImagePizza;
   pizzas : PizzaResponse[] = []; 
@@ -40,6 +41,22 @@ export class HomePage  implements OnInit {
 
   goToDetails(pizzaId: number) {
     this.router.navigate(['/application/pizza-details', pizzaId]);
+  }
+
+  scrollLeft() {
+    try {
+      this.scroller.nativeElement.scrollBy({ left: -320, behavior: 'smooth' });
+    } catch (e) {
+      // no-op if scroller not ready
+    }
+  }
+
+  scrollRight() {
+    try {
+      this.scroller.nativeElement.scrollBy({ left: 320, behavior: 'smooth' });
+    } catch (e) {
+      // no-op if scroller not ready
+    }
   }
 
 

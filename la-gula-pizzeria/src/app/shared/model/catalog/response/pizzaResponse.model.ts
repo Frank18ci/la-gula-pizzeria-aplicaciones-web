@@ -1,3 +1,4 @@
+import SizeResponse from "./SizeResponse.model";
 import ToppingResponse from "./toppingResponse.model";
 
 
@@ -9,4 +10,5 @@ export default interface PizzaResponse {
     image: string;
     active: boolean;
     toppings?: ToppingResponse[];
+    sizes?: SizeResponse[];
 }

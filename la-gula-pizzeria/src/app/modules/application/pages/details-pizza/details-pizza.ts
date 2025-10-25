@@ -1,15 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import SizeResponse from '../../../../shared/model/catalog/response/SizeResponse.model';
+import DoughTypeResponse from '../../../../shared/model/catalog/response/doughTypeResponse.model';
+import PizzaResponse from '../../../../shared/model/catalog/response/pizzaResponse.model';
+import ToppingResponse from '../../../../shared/model/catalog/response/toppingResponse.model';
+import { MaterialModule } from '../../../../shared/modules/material-module.module';
+import { CarritoService } from '../../../../shared/services/carrito/carrito-service';
+import { DoughTypeService } from '../../../../shared/services/catalog/dough-type-service';
 import { PizzaService } from '../../../../shared/services/catalog/pizza-service';
 import { SizeService } from '../../../../shared/services/catalog/size-service';
-import { DoughTypeService } from '../../../../shared/services/catalog/dough-type-service';
 import { ToppingService } from '../../../../shared/services/catalog/topping-service';
-import PizzaResponse from '../../../../shared/model/catalog/response/pizzaResponse.model';
-import { MaterialModule } from '../../../../shared/modules/material-module.module';
-import { CommonModule } from '@angular/common';
-import ToppingResponse from '../../../../shared/model/catalog/response/toppingResponse.model';
 import { RootImagePizza, RootImageTopping } from '../../../../shared/storage/RootImagen';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 interface CheeseOption {
@@ -19,40 +22,40 @@ interface CheeseOption {
 
 @Component({
   selector: 'app-details-pizza',
-  imports: [CommonModule,MaterialModule,FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule],
   templateUrl: './details-pizza.html',
   styleUrls: ['./details-pizza.css']
 })
-export class DetailsPizzaComponent  implements OnInit {
-  
-    pizza: PizzaResponse = {
-      id: 0,
-      name: '',
-      description: '',
-      image: '',
-      basePrice: 0,
-      toppings: [],
-      active: false
-    };
-    pizzaId!: number;
-    sizes: any[] = [];
-    doughs: any[] = [];
-    toppings: ToppingResponse[] = [];
+export class DetailsPizzaComponent implements OnInit {
 
-    rootImagePizza = RootImagePizza;
-    rootImageTopping = RootImageTopping;
-    
+  pizza: PizzaResponse = {
+    id: 0,
+    name: '',
+    description: '',
+    image: '',
+    basePrice: 0,
+    toppings: [],
+    active: false
+  };
+  pizzaId!: number;
+  sizes: SizeResponse[] = [];
+  doughs: DoughTypeResponse[] = [];
+  toppings: ToppingResponse[] = [];
+
+  rootImagePizza = RootImagePizza;
+  rootImageTopping = RootImageTopping;
+
 
   cheeses: CheeseOption[] = [
-      { name: 'Mozzarella', extraPrice: 0 },
-      { name: 'Cheddar', extraPrice: 1.5 },
-      { name: 'Parmesan', extraPrice: 2 }
+    { name: 'Mozzarella', extraPrice: 0 },
+    { name: 'Cheddar', extraPrice: 1.5 },
+    { name: 'Parmesan', extraPrice: 2 }
   ];
 
-  selectedSize: any = null;
-  selectedDough: any = null;
+  selectedSize: SizeResponse | null = null;
+  selectedDough: DoughTypeResponse | null = null;
   selectedCheese: CheeseOption | null = null;
-  selectedToppings: any[] = [];
+  selectedToppings: ToppingResponse[] = [];
 
   totalPrice: number = 0;
 
@@ -62,14 +65,14 @@ export class DetailsPizzaComponent  implements OnInit {
     private sizeService: SizeService,
     private doughService: DoughTypeService,
     private toppingService: ToppingService,
-    private router: Router,
-    private cdr: ChangeDetectorRef
-  ){}
+    private cdr: ChangeDetectorRef,
+    private carritoService: CarritoService
+  ) { }
 
 
   ngOnInit(): void {
-    const pizzaId = this .route.snapshot.params['id'];
-    
+    const pizzaId = this.route.snapshot.params['id'];
+
     this.pizzaService.getPizzaById(pizzaId).subscribe({
       next: data => {
         this.pizza = data;
@@ -137,21 +140,26 @@ export class DetailsPizzaComponent  implements OnInit {
       toppings: this.selectedToppings,
       totalPrice: this.totalPrice
     });
+    this.carritoService.saveItemToCart({
+      id: this.carritoService.getNextId(),
+      pizzaId: this.pizza.id,
+      sizeId: this.selectedSize ? this.selectedSize.id : 0,
+      doughTypeId: this.selectedDough ? this.selectedDough.id : 0,
+      quantity: 1,
+      toppings: this.selectedToppings.map(t => ({ toppingId: t.id, quantity: 1 }))
+    });
+    console.log('Pizza added to cart successfully.');
+    console.log(this.carritoService.getCart());
   }
 
-getToppingsTotal(): number {
- if (!this.selectedToppings?.length) return 0;
-  return this.selectedToppings.reduce((a, b) => a + (b.basePrice || 0), 0);
-}
-
-isToppingSelected(topping: any): boolean {
-  return this.selectedToppings?.some(t => t.id === topping.id) || false;
-}
-
-
-  orderNow() {
-    this.addToCart();
-    //todavia no hau vista 
-    this.router.navigate(['/checkout']); 
+  getToppingsTotal(): number {
+    if (!this.selectedToppings?.length) return 0;
+    return this.selectedToppings.reduce((a, b) => a + (b.basePrice || 0), 0);
   }
+
+  isToppingSelected(topping: any): boolean {
+    return this.selectedToppings?.some(t => t.id === topping.id) || false;
+  }
+
+
 }
