@@ -5,10 +5,12 @@ import UserResponse from '../../../../shared/model/user/response/userResponse.mo
 import UserRoleResponse from '../../../../shared/model/user/response/userRoleResponse.model';
 import RoleResponse from '../../../../shared/model/user/response/roleResponse.model';
 import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../../../../shared/modules/material-module.module';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-perfil-page',
-  imports: [CommonModule],
+  imports: [CommonModule,MaterialModule,FormsModule],
   templateUrl: './perfil-page.html',
   styleUrl: './perfil-page.css'
 })
@@ -23,6 +25,10 @@ export class PerfilPage implements OnInit{
     createdAt: '2023-01-01T00:00:00Z',
     updatedAt: ''
   };
+
+  isFavoriteHome = false;
+isFavoriteWork = false;
+
   roles: RoleResponse[] = [
     {id: 1, name: 'admin', description: 'Administrador del sistema', createdAt: '2025-10-09T12:57:18', updatedAt: '2025-10-09T12:57:18'},
     {id: 2, name: 'cliente', description: 'Cliente final', createdAt: '2025-10-09T12:57:18', updatedAt: '2025-10-09T12:57:18'}
@@ -59,4 +65,18 @@ export class PerfilPage implements OnInit{
       error: err => console.error(err)
     });
   }
+
+  onAddAddress(){
+    console.log('Add new address...');
+
+  }
+toggleFavorite(type: string) {
+  if (type === 'home') {
+    this.isFavoriteHome = !this.isFavoriteHome;
+  } else if (type === 'work') {
+    this.isFavoriteWork = !this.isFavoriteWork;
+  }
+}
+
+ 
 }
