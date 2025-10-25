@@ -1,0 +1,85 @@
+<div class="w-full min-h-screen bg-gray-50 p-10 flex flex-col">
+
+    <div class="container mx-auto">
+        <h1 class="text-5xl font-bold my-4">Carrito de Compras</h1>
+        <div class="grid grid-cols-3 gap-10">
+            <div class="col-span-2">
+                @for(carritoItem of cartItems; track carritoItem) {
+                <div
+                    class="bg-white rounded-2xl shadow-lg p-6 mb-6 flex items-center justify-between md:flex-row flex-col">
+                    <div class="flex items center gap-6">
+                        <img [src]="rootImagePizza + carritoItem.pizza.image" alt="{{ carritoItem.pizza.name }}"
+                            class="w-24 h-24 rounded-full object-cover" />
+                        <div>
+                            <h2 class="text-2xl font-semibold text-gray-800">{{ carritoItem.pizza.name }}</h2>
+                            <p class="text-gray-500">Size: {{ carritoItem.size.name }}</p>
+                            <p class="text-gray-500">Dough: {{ carritoItem.doughType.name }}</p>
+                            <p class="text-gray-500">Toppings:
+                                @if(carritoItem.toppings.length > 0) {
+                                <span *ngFor="let topping of carritoItem.toppings; let last = last">
+                                    {{ topping.topping.name }} {{ topping.quantity }}<span *ngIf="!last">, </span>
+                                </span>
+                                } @else {
+                                <span>
+                                    Ninguno
+                                </span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center gap-4">
+                        <div>
+                            <div class="flex-col justify-center items-center">
+                                <div>
+                                    Cantidad:
+                                </div>
+                                <div class="flex items-center gap-4 mt-2">
+                                    <button class="bg-blue-500 text-white py-1 px-2 rounded-lg" (click)="aumentarCantidad(carritoItem.id)">+</button>
+                                    <span class="text-lg font-semibold text-gray-800">
+                                        {{ carritoItem.quantity }}
+                                    </span>
+                                    <button class="bg-blue-500 text-white py-1 px-2 rounded-lg" (click)="disminuirCantidad(carritoItem.id)">-</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center gap-2 flex-col">
+                            <div>
+                                <p class="text-lg font-semibold text-gray-800 mb-4">
+                                    Subtotal: {{ carritoItem.subtotal | currency:'S/. ':'symbol-narrow':'1.2-2' }}
+                                </p>
+                            </div>
+                            <button class="bg-red-500 text-white py-2 px-4 rounded-lg" (click)="eliminarItem(carritoItem.id)">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+            <div class="col-span-1">
+                <div class="bg-white p-6 rounded-2xl shadow-md space-y-6">
+                    <h2 class="text-2xl font-bold">Resumen de Orden</h2>
+                    <hr>
+                    <div class="flex justify-between mt-4">
+                        <span class="font-medium">Subtotal</span>
+                        <span class="font-medium">{{ total * 0.82 | currency:'S/. ':'symbol-narrow':'1.2-2' }}</span>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                        <span class="font-medium">Impuestos(18%)</span>
+                        <span class="font-medium">{{ total * 0.18 | currency:'S/. ':'symbol-narrow':'1.2-2' }}</span>
+                    </div>
+                    <hr>
+                    <div>
+                        <div class="flex justify-between mt-4">
+                            <span class="text-xl font-bold">Total</span>
+                            <span class="text-xl font-bold">{{ total | currency:'S/. ':'symbol-narrow':'1.2-2' }}</span>
+                        </div>
+                        <button
+                            class="w-full bg-orange-600 text-white py-3 rounded-xl mt-6 font-semibold hover:bg-orange-700 transition"
+                            [disabled]="cartItems.length === 0">
+                            Realizar Orden
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

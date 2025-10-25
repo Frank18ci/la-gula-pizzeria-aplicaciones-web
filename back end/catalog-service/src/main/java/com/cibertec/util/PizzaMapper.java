@@ -3,7 +3,9 @@ package com.cibertec.util;
 import com.cibertec.dto.PizzaRequest;
 import com.cibertec.dto.PizzaResponse;
 import com.cibertec.model.Pizza;
+import com.cibertec.model.Size;
 import com.cibertec.model.Topping;
+import com.cibertec.repository.SizeRepository;
 import com.cibertec.repository.ToppingRepository;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
@@ -20,8 +22,10 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {ToppingMapper.class, PizzaMapper.class})
 public interface PizzaMapper {
     @Mapping(source = "toppingIds", target = "toppings")
+    @Mapping(source = "sizeIds", target = "sizes")
     @Mapping(source = "image", target = "image", qualifiedByName = "extractPizzaImageName")
-    Pizza toEntity(PizzaRequest pizzaRequest, @Context ToppingRepository toppingRepository, @Context String name);
+    Pizza toEntity(PizzaRequest pizzaRequest, @Context ToppingRepository toppingRepository,
+                   @Context SizeRepository sizeRepository, @Context String name);
     PizzaResponse toDto(Pizza pizza);
     List<PizzaResponse> toDtoList(List<Pizza> pizzas);
 
@@ -30,6 +34,12 @@ public interface PizzaMapper {
             return List.of();
         }
         return toppingRepository.findAllById(toppingIds);
+    }
+    default List<Size> map(List<Long> sizeIds, @Context SizeRepository sizeRepository) {
+        if(sizeIds == null || sizeIds.isEmpty()) {
+            return List.of();
+        }
+        return sizeRepository.findAllById(sizeIds);
     }
     /**
      * Genera el nombre del archivo de imagen basado en el nombre o SKU recibido.

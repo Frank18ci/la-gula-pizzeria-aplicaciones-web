@@ -3,6 +3,7 @@ package com.cibertec.service;
 import com.cibertec.dto.PizzaRequest;
 import com.cibertec.dto.PizzaResponse;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface PizzaService {
@@ -12,5 +13,5 @@ public interface PizzaService {
     PizzaResponse updatePizza(Long id, PizzaRequest pizzaRequest);
     void deletePizza(Long id);
 
-    List<PizzaResponse> getAllPizzasByPriceBetweenAndSizeIdAndDoughTypeId(Double minPrice, Double maxPrice, Long sizeId, Long doughTypeId);
+    List<PizzaResponse> getAllPizzasByPriceBetweenAndSizeIdAndDoughTypeId(BigDecimal minPrice, BigDecimal maxPrice, Long sizeId, Long toppingId);
 }

@@ -5,6 +5,7 @@ import com.cibertec.dto.PizzaResponse;
 import com.cibertec.exception.ResourceNotFound;
 import com.cibertec.model.Pizza;
 import com.cibertec.repository.PizzaRepository;
+import com.cibertec.repository.SizeRepository;
 import com.cibertec.repository.ToppingRepository;
 import com.cibertec.service.PizzaService;
 import com.cibertec.storage.ImageStorageService;
@@ -13,6 +14,7 @@ import com.cibertec.util.PizzaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -20,6 +22,7 @@ import java.util.List;
 public class PizzaServiceImpl implements PizzaService {
     private final PizzaRepository pizzaRepository;
     private final ToppingRepository toppingRepository;
+    private final SizeRepository sizeRepository;
     private final PizzaMapper pizzaMapper;
     private final ImageStorageService imageStorageService;
 
@@ -41,7 +44,7 @@ public class PizzaServiceImpl implements PizzaService {
 
     @Override
     public PizzaResponse createPizza(PizzaRequest pizzaRequest) {
-        Pizza pizza = pizzaMapper.toEntity(pizzaRequest, toppingRepository, pizzaRequest.name());
+        Pizza pizza = pizzaMapper.toEntity(pizzaRequest, toppingRepository, sizeRepository, pizzaRequest.name());
         try{
             imageStorageService.saveImage(pizzaRequest.image(), pizza.getName(), TypeStorageEnum.PIZZA);
         } catch (Exception e){
@@ -58,7 +61,7 @@ public class PizzaServiceImpl implements PizzaService {
         pizzaFound.setName(pizzaRequest.name());
         pizzaFound.setDescription(pizzaRequest.description());
         pizzaFound.setBasePrice(pizzaRequest.basePrice());
-        pizzaFound.setImage(pizzaMapper.toEntity(pizzaRequest, toppingRepository, pizzaRequest.name()).getImage());
+        pizzaFound.setImage(pizzaMapper.toEntity(pizzaRequest, toppingRepository, sizeRepository, pizzaRequest.name()).getImage());
         pizzaFound.setActive(pizzaRequest.active());
 
         if(pizzaRequest.toppingIds() != null) {
@@ -85,7 +88,15 @@ public class PizzaServiceImpl implements PizzaService {
     }
 
     @Override
-    public List<PizzaResponse> getAllPizzasByPriceBetweenAndSizeIdAndDoughTypeId(Double minPrice, Double maxPrice, Long sizeId, Long doughTypeId) {
-        return List.of();
+    public List<PizzaResponse> getAllPizzasByPriceBetweenAndSizeIdAndDoughTypeId(BigDecimal minPrice, BigDecimal maxPrice, Long sizeId, Long toppingId) {
+        if(sizeId == 0 && toppingId == 0) {
+            return pizzaMapper.toDtoList(pizzaRepository.findByBasePriceBetween(minPrice, maxPrice));
+        } else if(sizeId != 0 && toppingId == 0) {
+            return pizzaMapper.toDtoList(pizzaRepository.findByPriceRangeAndSizeId(minPrice, maxPrice, sizeId));
+        } else if(sizeId == 0) {
+            return pizzaMapper.toDtoList(pizzaRepository.findByPriceRangeAndToppingId(minPrice, maxPrice, toppingId));
+        }
+
+        return pizzaMapper.toDtoList(pizzaRepository.findByPriceRangeAndSizeIdAndToppingId(minPrice, maxPrice, sizeId, toppingId));
     }
 }

@@ -43,7 +43,7 @@
         <mat-form-field appearance="outline" class="w-full">
           <mat-select [(ngModel)]="selectedDough" (selectionChange)="updatePrice()">
             <mat-option *ngFor="let dough of doughs" [value]="dough">
-              {{ dough.name }} (+{{ dough.extraPrice | currency }})
+              {{ dough.name }} (+{{ dough.extraPrice | currency:'S/. ':'symbol-narrow':'1.2-2' }})
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -55,7 +55,7 @@
         <mat-form-field appearance="outline" class="w-full">
           <mat-select [(ngModel)]="selectedCheese" (selectionChange)="updatePrice()">
             <mat-option *ngFor="let cheese of cheeses" [value]="cheese">
-              {{ cheese.name }} (+{{ cheese.extraPrice | currency }})
+              {{ cheese.name }} (+{{ cheese.extraPrice | currency:'S/. ':'symbol-narrow':'1.2-2' }})
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -75,7 +75,7 @@
               class="w-16 h-16 object-cover rounded-full mb-2"
             />
             <p class="text-sm font-medium mb-1">{{ topping.name }}</p>
-            <p class="text-xs text-gray-500 mb-1">{{ topping.basePrice | currency }}</p>
+            <p class="text-xs text-gray-500 mb-1">{{ topping.basePrice | currency:'S/. ':'symbol-narrow':'1.2-2' }}</p>
 
             <mat-slide-toggle
               color="primary"
@@ -107,7 +107,7 @@
     <div class="border-t mt-4 pt-4">
       <p class="text-lg font-semibold text-gray-800">
         Total:
-        <span class="text-green-600">{{ totalPrice | currency }}</span>
+        <span class="text-green-600">{{ totalPrice | currency:'S/. ':'symbol-narrow':'1.2-2' }}</span>
       </p>
     </div>
 
@@ -119,14 +119,6 @@
         (click)="addToCart()"
       >
         Add to Cart
-      </button>
-      <button
-        mat-stroked-button
-        color="accent"
-        class="py-3 text-lg font-semibold rounded-xl"
-        (click)="orderNow()"
-      >
-       Order Now
       </button>
     </div>
   </div>

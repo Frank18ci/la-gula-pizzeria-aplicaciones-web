@@ -1,20 +1,6 @@
 <div class="min-h-screen bg-gray-100">
 
-  <header class="bg-white shadow py-4">
-    <div class="container mx-auto flex items-center justify-between px-4">
-      <div class="flex-1 mx-8 relative">
-        <mat-icon class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">search</mat-icon>
-        <input type="text" placeholder="Buscar productos..."
-          class="w-full border border-gray-300 rounded-full py-2 px-10 focus:outline-none focus:ring-2 focus:ring-red-500" />
-      </div>
-      <div class="flex items-center gap-4">
-        <button class="relative">
-          <mat-icon class="text-3xl text-gray-700">shopping_cart</mat-icon>
-        </button>
-      </div>
 
-    </div>
-  </header>
 
 
   <section class="relative flex items-center justify-center text-center mt-8">
@@ -32,35 +18,76 @@
     </div>
   </section>
 
-  <!--🍕  -->
 
   <section class="py-12 bg-gray-100">
     <div class="container mx-auto px-4">
 
-      <h2 class="text-3xl font-bold mb-6 text-center">Featured Pizzas</h2>
+      <div class="flex items-end justify-between mb-6">
+        <div>
+          <h2 class="text-3xl font-bold">Pizzas destacadas</h2>
+          <p class="text-gray-600">Las favoritas de nuestros clientes</p>
+        </div>
 
-      <div *ngIf="pizzas && pizzas.length > 0" class="flex overflow-x-auto gap-4 scrollbar-hide">
-        <mat-card *ngFor="let pizza of pizzas" class="flex-none w-64">
-          <mat-card-header>
-            <mat-card-title class="text-center">{{ pizza.name }}</mat-card-title>
-          </mat-card-header>
-          <img mat-card-image [src]="rootImagePizza + pizza.image" alt="{{ pizza.name }}" class="h-40 object-cover" />
-          <mat-card-content class="text-center mt-2">
-            <p class="text-red-600 font-bold">S/. {{ pizza.basePrice }}</p>
-          </mat-card-content>
-          <mat-card-actions class="flex justify-center mt-2">
-            <button mat-raised-button (click)="goToDetails(pizza.id)" style="background-color: #003973; color: white;">
-              <mat-icon>add_shopping_cart</mat-icon>
-              Add
-            </button>
-          </mat-card-actions>
-        </mat-card>
       </div>
 
-      
-      <div *ngIf="!pizzas || pizzas.length === 0" class="text-center text-gray-500 mt-4">
-        Loading pizzas...
+      <div *ngIf="pizzas && pizzas.length > 0; else loadingPizzas" class="relative">
+        <div
+          #scroller
+          class="flex overflow-x-auto gap-4 py-2 scroll-smooth snap-x snap-mandatory scrollbar-hide"
+          role="list"
+          aria-label="Lista de pizzas destacadas"
+          tabindex="0">
+          <mat-card
+            *ngFor="let pizza of pizzas"
+            >
+            <mat-card-header class="justify-center">
+              <mat-card-title class="text-center font-semibold truncate" style="margin-bottom: 2rem;" [title]="pizza.name">
+                {{ pizza.name }}
+              </mat-card-title>
+            </mat-card-header>
+
+            <img
+              mat-card-image
+              [src]="(rootImagePizza + pizza.image) || 'assets/placeholder-pizza.jpg'"
+              alt="{{ pizza.name || 'Pizza' }}"
+              class="h-40 w-full object-cover"
+              loading="lazy"
+              decoding="async" />
+
+            <mat-card-content class="text-center mt-3">
+              <p class="text-red-500 font-bold text-lg">
+                {{ pizza.basePrice | currency:'S/. ':'symbol-narrow':'1.2-2' }}
+              </p>
+            </mat-card-content>
+
+            <mat-card-actions class="flex justify-center gap-2 pb-4">
+              <button
+                style="background-color: #003973; color: #fff;"
+                mat-raised-button
+                (click)="goToDetails(pizza.id)"
+                aria-label="Agregar {{ pizza.name }} al carrito">
+                <mat-icon>remove_red_eye</mat-icon>
+                Ver
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
       </div>
+
+      <ng-template #loadingPizzas>
+        <div class="flex gap-4 overflow-x-auto py-2">
+          <div *ngFor="let s of [1,2,3,4]" class="flex-none w-72 md:w-64">
+            <div class="bg-white rounded-md shadow p-4 animate-pulse">
+              <div class="h-40 w-full bg-gray-200 rounded"></div>
+              <div class="h-4 bg-gray-200 rounded mt-4 w-3/4"></div>
+              <div class="h-4 bg-gray-200 rounded mt-2 w-1/2"></div>
+              <div class="h-10 bg-gray-200 rounded mt-4"></div>
+            </div>
+          </div>
+        </div>
+        <p class="text-center text-gray-500 mt-4">Cargando pizzas...</p>
+      </ng-template>
+
     </div>
   </section>
 

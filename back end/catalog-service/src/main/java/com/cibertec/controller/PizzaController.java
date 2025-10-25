@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -43,12 +45,12 @@ public class PizzaController {
     public ResponseEntity<?> getImage(@PathVariable String image) {
         return imageStorageService.obtainImage(image, TypeStorageEnum.PIZZA);
     }
-    @GetMapping("search")
+    @GetMapping("searchOptions")
     public ResponseEntity<?> geAllPizzasByPriceBetweenAndSizeIdAndDoughTypeId(
-            @RequestParam Double minPrice,
-            @RequestParam Double maxPrice,
+            @RequestParam BigDecimal minPrice,
+            @RequestParam BigDecimal maxPrice,
             @RequestParam Long sizeId,
-            @RequestParam Long doughTypeId) {
-        return ResponseEntity.ok(pizzaService.getAllPizzasByPriceBetweenAndSizeIdAndDoughTypeId(minPrice, maxPrice, sizeId, doughTypeId));
+            @RequestParam Long toppingId) {
+        return ResponseEntity.ok(pizzaService.getAllPizzasByPriceBetweenAndSizeIdAndDoughTypeId(minPrice, maxPrice, sizeId, toppingId));
     }
 }

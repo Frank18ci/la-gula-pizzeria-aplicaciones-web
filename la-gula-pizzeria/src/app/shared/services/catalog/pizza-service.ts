@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GATEWAY_URL, SERVICES_PATHS } from '../config/config';
 import { Observable } from 'rxjs';
 import PizzaResponse from '../../model/catalog/response/pizzaResponse.model';
-import PizzaRequest from '../../model/catalog/request/pizzaRequest.model';
+import { GATEWAY_URL, SERVICES_PATHS } from '../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +19,9 @@ export class PizzaService {
   }
   getPizzaByName(name: string) : Observable<PizzaResponse[]> {
     return this.http.get<PizzaResponse[]>(`${this.path}/search`, { params: { name } });
+  }
+  getPizzaByPriceRangeAndSizeIdAndDough(minPrice: number, maxPrice: number, sizeId: number = 0, toppingId: number = 0) : Observable<PizzaResponse[]> {
+    return this.http.get<PizzaResponse[]>(`${this.path}/searchOptions`, { params: { minPrice, maxPrice, sizeId, toppingId } });
   }
   getPizzaById(id: number) : Observable<PizzaResponse> {
     return this.http.get<PizzaResponse>(`${this.path}/${id}`);

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -31,4 +32,7 @@ public class Size {
     private LocalDateTime createdAt;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP", insertable = false)
     private LocalDateTime updatedAt;
+
+    @ManyToMany(mappedBy = "sizes")
+    private List<Pizza> pizzas;
 }
