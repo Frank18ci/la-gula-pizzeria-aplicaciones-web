@@ -1,2 +1,3 @@
 ## La Gula Pizzeria
-Proyecto 
+Proyecto creado con microservicios en spring boot
+Bases de datos mysql
