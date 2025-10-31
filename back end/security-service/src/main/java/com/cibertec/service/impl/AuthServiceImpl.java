@@ -37,6 +37,7 @@ public class AuthServiceImpl implements AuthService {
         String token = jwtUtil.generateAccessToken(user.email());
         List<UserRoleResponse> userRoleResponses = userClient.getUserRolesByUserId(user.id());
         return AuthResponse.builder()
+                .id(user.id())
                 .token(token)
                 .fullName(user.fullName())
                 .username(user.email())
