@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'spring-boot-app'
+    metrics_path: '/actuator/prometheus'
+    consul_sd_configs:
+      - server: 'http://consul:8500'
+        services: [ 'catalog-service',
+                    'config-service',
+                    'customer-service',
+                    'delivery-service',
+                    'gateway-service',
+                    'ordening-service',
+                    'payment-service',
+                    'security-service',
+                    'users-service' ]

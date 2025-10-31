@@ -1,18 +1,6 @@
 spring:
   application:
     name: security-service
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        enabled: true
-        register: true
-server:
-  port: 8090
-
-
-
-jwt:
-  time:
-    expiration: 86400000  # 1 dia en milisegundos
+  config:
+    import:
+      - optional:configserver:http://localhost:8100/

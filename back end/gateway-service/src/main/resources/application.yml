@@ -1,66 +1,6 @@
 spring:
   application:
     name: gateway-service
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        enabled: true
-        register: true
-
-
-    gateway:
-      server:
-        webmvc:
-          routes:
-            - id: catalog-service
-              uri: lb://catalog-service
-              predicates:
-                - Path=/catalog/**
-              filters:
-                - StripPrefix=1
-            - id: customer-service
-              uri: lb://customer-service
-              predicates:
-                - Path=/customer/**
-              filters:
-                - StripPrefix=1
-            - id: delivery-service
-              uri: lb://delivery-service
-              predicates:
-                - Path=/delivery/**
-              filters:
-                - StripPrefix=1
-            - id: ordening-service
-              uri: lb://ordening-service
-              predicates:
-                - Path=/ordening/**
-              filters:
-                - StripPrefix=1
-            - id: payment-service
-              uri: lb://payment-service
-              predicates:
-                - Path=/payment/**
-              filters:
-                - StripPrefix=1
-            - id: users-service
-              uri: lb://users-service
-              predicates:
-                - Path=/users/**
-              filters:
-                - StripPrefix=1
-            - id: security-service
-              uri: lb://security-service
-              predicates:
-                - Path=/security/**
-              filters:
-                - StripPrefix=1
-                - RemoveRequestHeader=Cookie
-
-server:
-  port: 8080
-
-jwt:
-  time:
-    expiration: 86400000  # 1 dia en milisegundos
+  config:
+    import:
+      - optional:configserver:http://localhost:8100/
