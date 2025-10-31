@@ -61,4 +61,22 @@ public class AuthServiceImpl implements AuthService {
         //Create user with ROLE_USER by default
         return userResponse;
     }
+
+    @Override
+    public UserResponse registerAdmin(UserRequest userRequest) {
+        userRequest = new UserRequest(
+                userRequest.email(),
+                passwordEncoder.encode(userRequest.password()),
+                userRequest.fullName(),
+                userRequest.phone(),
+                userRequest.status()
+        );
+        UserResponse userResponse = userClient.createUser(userRequest);
+        userClient.saveUserRole(UserRoleRequest.builder()
+                .userId(userResponse.id())
+                .roleId(1L)
+                .build());
+        //Create user with ROLE_ADMIN by default
+        return userResponse;
+    }
 }

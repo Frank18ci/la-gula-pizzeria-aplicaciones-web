@@ -3,6 +3,8 @@ import { AuthService } from '../../../../shared/services/auth/auth-service';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import AuthRequest from '../../../../shared/model/auth/AuthRequest.model';
+import { ToastrService } from 'ngx-toastr';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login-page',
@@ -19,7 +21,9 @@ export class LoginPage implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    private cookieService: CookieService
   ) {}
   login(): void {
     if (this.form.invalid) {
@@ -29,11 +33,12 @@ export class LoginPage implements OnInit {
     this.authRequest = { ...this.form.value };
     this.authService.login(this.authRequest).subscribe({
       next: (response) => {
-        // Handle successful login
+        this.toastr.success('Login exitoso', 'Login');
+        this.cookieService.set('user', JSON.stringify(response));
         this.router.navigate(['/application/home']);
       },
       error: (error) => {
-        // Handle login error
+        this.toastr.error('Usuario o contraseña incorrectos', 'Login');
         console.error('Login failed', error);
       }
     });
