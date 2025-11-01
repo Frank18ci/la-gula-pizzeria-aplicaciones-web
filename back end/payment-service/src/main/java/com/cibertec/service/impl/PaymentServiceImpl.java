@@ -1,5 +1,6 @@
 package com.cibertec.service.impl;
 
+import com.cibertec.client.OrdeningClient;
 import com.cibertec.dto.PaymentRequest;
 import com.cibertec.dto.PaymentResponse;
 import com.cibertec.model.Payment;
@@ -15,6 +16,9 @@ import java.util.List;
 public class PaymentServiceImpl implements PaymentService {
     private final PaymentMapper paymentMapper;
     private final PaymentRepository paymentRepository;
+
+    private final OrdeningClient ordeningClient;
+
     @Override
     public List<PaymentResponse> getAllPayments() {
         return paymentMapper.toDtoList(paymentRepository.findAll());
@@ -29,6 +33,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentResponse createPayment(PaymentRequest paymentRequest) {
+        ordeningClient.findById(paymentRequest.orderId());
         return paymentMapper.toDto(paymentRepository.save(paymentMapper.toEntity(paymentRequest)));
     }
 
@@ -37,6 +42,9 @@ public class PaymentServiceImpl implements PaymentService {
         Payment paymentFound = paymentRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Payment not found with id: " + id)
         );
+
+        ordeningClient.findById(paymentRequest.orderId());
+
         paymentFound.setOrder(paymentMapper.toEntity(paymentRequest).getOrder());
         paymentFound.setAmount(paymentRequest.amount());
         paymentFound.setCurrency(paymentRequest.currency());

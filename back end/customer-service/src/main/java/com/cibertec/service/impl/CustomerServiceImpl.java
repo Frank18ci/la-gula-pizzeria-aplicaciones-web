@@ -1,5 +1,6 @@
 package com.cibertec.service.impl;
 
+import com.cibertec.client.UserClient;
 import com.cibertec.dto.CustomerRequest;
 import com.cibertec.dto.CustomerResponse;
 import com.cibertec.model.Customer;
@@ -16,6 +17,9 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
+
+    private final UserClient userClient;
+
     @Override
     public List<CustomerResponse> getAllCustomers() {
         return customerMapper.toDtoList(customerRepository.findAll());
@@ -29,19 +33,23 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponse createCustomer(CustomerRequest CustomerRequest) {
-        return customerMapper.toDto(customerRepository.save(customerMapper.toEntity(CustomerRequest)));
+    public CustomerResponse createCustomer(CustomerRequest customerRequest) {
+        userClient.findById(customerRequest.userId());
+        return customerMapper.toDto(customerRepository.save(customerMapper.toEntity(customerRequest)));
     }
 
     @Override
-    public CustomerResponse updateCustomer(Long id, CustomerRequest CustomerRequest) {
+    public CustomerResponse updateCustomer(Long id, CustomerRequest customerRequest) {
         Customer customerFound = customerRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Customer not found with id: " + id)
         );
-        customerFound.setUserId(CustomerRequest.userId());
-        customerFound.setLoyaltyPoints(CustomerRequest.loyaltyPoints());
-        customerFound.setBirthDate(CustomerRequest.birthDate());
-        customerFound.setNotes(CustomerRequest.notes());
+
+        userClient.findById(customerRequest.userId());
+
+        customerFound.setUserId(customerRequest.userId());
+        customerFound.setLoyaltyPoints(customerRequest.loyaltyPoints());
+        customerFound.setBirthDate(customerRequest.birthDate());
+        customerFound.setNotes(customerRequest.notes());
         return customerMapper.toDto(customerRepository.save(customerFound));
     }
 

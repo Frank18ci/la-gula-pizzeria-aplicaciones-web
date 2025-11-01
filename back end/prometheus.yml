@@ -14,4 +14,5 @@ scrape_configs:
                     'ordening-service',
                     'payment-service',
                     'security-service',
-                    'users-service' ]
+                    'users-service',
+                    'email-service' ]

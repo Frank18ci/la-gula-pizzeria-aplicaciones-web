@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderItemTopping {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -42,7 +42,7 @@ public class OrderItemTopping {
     @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
 
-     // Relación con OrderItem
+    // Relación con OrderItem
     @ManyToOne
     @JoinColumn(name = "order_item_id", nullable = false)
     private OrderItem orderItem;

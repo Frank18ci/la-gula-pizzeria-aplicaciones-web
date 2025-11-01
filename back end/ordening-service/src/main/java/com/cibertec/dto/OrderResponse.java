@@ -10,9 +10,9 @@ import com.cibertec.enums.PaymentStatus;
 import lombok.Builder;
 
 @Builder
-public  record OrderResponse (
+public record OrderResponse(
 
-        Long id,  
+        Long id,
 
         String orderNumber,
 
@@ -41,5 +41,6 @@ public  record OrderResponse (
         LocalDateTime placedAt,
 
         LocalDateTime updatedAt
-    
-){}
+
+) {
+}

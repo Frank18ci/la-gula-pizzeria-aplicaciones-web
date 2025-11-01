@@ -38,8 +38,7 @@ INSERT INTO customers (user_id, loyalty_points, birth_date, notes) VALUES
 (4, 150, '1990-05-15 00:00:00', 'Cliente frecuente'),
 (2, 50, '1985-10-20 00:00:00', 'Cliente nuevo'),
 (3, 200, '1978-03-30 00:00:00', 'Cliente VIP'),
-(1, 0, NULL, 'Administrador del sistema'),
-(5, 50, '1985-10-20 00:00:00', 'Cliente nuevo');
+(1, 0, NULL, 'Administrador del sistema');
 
 INSERT INTO addresses (customer_id, label, street, external_number, internal_number, neighborhood, city, state, zip_code, country, reference, is_default) VALUES
 (1, 'Casa', 'Av. Siempre Viva 123', '123', 'Apt 1', 'Springfield', 'Springfield', 'IL', '62701', 'US', 'Cerca del parque', TRUE),
