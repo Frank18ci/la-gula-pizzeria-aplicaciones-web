@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderItem {
 
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,7 +34,7 @@ public class OrderItem {
     private Long pizzaId;
 
     private Long sizeId;
-    
+
     private Long doughTypeId;
 
     @Column(nullable = false)
@@ -55,14 +55,13 @@ public class OrderItem {
     private LocalDateTime updatedAt;
 
 
-
     // RELACIÓN con toppings
     @OneToMany(mappedBy = "orderItem")
     private List<OrderItemTopping> toppings;
 
-     // Relación con Order 
+    // Relación con Order
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
-    
+
 }

@@ -10,27 +10,28 @@ import lombok.Builder;
 public record OrderItemRequest(
 
 
-    @NotNull(message = "Pizza ID is required")
-    Long pizzaId,
+        @NotNull(message = "Pizza ID is required")
+        Long pizzaId,
 
-    @NotNull(message = "Size ID is required")
-    Long sizeId,
+        @NotNull(message = "Size ID is required")
+        Long sizeId,
 
-    @NotNull(message = "Dough type ID is required")
-    Long doughTypeId,
+        @NotNull(message = "Dough type ID is required")
+        Long doughTypeId,
 
-    @NotNull(message = "Quantity is required")
-    Integer quantity,
+        @NotNull(message = "Quantity is required")
+        Integer quantity,
 
-    @NotNull(message = "Unit price is required")
-    BigDecimal unitPrice,
+        @NotNull(message = "Unit price is required")
+        BigDecimal unitPrice,
 
-    @NotNull(message = "Line total is required")
-    BigDecimal lineTotal,
-    @NotNull(message = "Order ID is required")
-    Long orderId,
+        @NotNull(message = "Line total is required")
+        BigDecimal lineTotal,
+        @NotNull(message = "Order ID is required")
+        Long orderId,
 
-    String note
+        String note
 
-    
-) {}
+
+) {
+}

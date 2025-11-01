@@ -10,16 +10,17 @@ import lombok.Builder;
 @Builder
 public record OrderItemToppingResponse(
 
-    Long id,
+        Long id,
 
-    Long toppingId,
+        Long toppingId,
 
-    String action,
+        String action,
 
-    Integer quantity,
+        Integer quantity,
 
-    BigDecimal priceDelta,
-    
-    LocalDateTime createdAt,
-    OrderItemResponse orderItem
-) {}
+        BigDecimal priceDelta,
+
+        LocalDateTime createdAt,
+        OrderItemResponse orderItem
+) {
+}

@@ -21,8 +21,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
-    
-    
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -68,7 +68,6 @@ public class Order {
 
     @Column(name = "updated_at", insertable = false, nullable = false)
     private LocalDateTime updatedAt;
-
 
 
     @OneToMany(mappedBy = "order")

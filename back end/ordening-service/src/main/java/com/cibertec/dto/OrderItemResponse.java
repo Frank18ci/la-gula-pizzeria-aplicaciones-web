@@ -2,30 +2,32 @@ package com.cibertec.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 import lombok.Builder;
 
 @Builder
 public record OrderItemResponse(
 
-    Long id,
+        Long id,
 
-    Long pizzaId,
+        Long pizzaId,
 
-    Long sizeId,
+        Long sizeId,
 
-    Long doughTypeId,
+        Long doughTypeId,
 
-    Integer quantity,
+        Integer quantity,
 
-    BigDecimal unitPrice,
+        BigDecimal unitPrice,
 
-    BigDecimal lineTotal,
+        BigDecimal lineTotal,
 
-    String note,
+        String note,
 
-    LocalDateTime createdAt,
+        LocalDateTime createdAt,
 
-    LocalDateTime updatedAt,
-    
-    OrderResponse order
-) {}
+        LocalDateTime updatedAt,
+
+        OrderResponse order
+) {
+}
