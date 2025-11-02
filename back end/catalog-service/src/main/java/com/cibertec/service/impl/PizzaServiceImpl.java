@@ -99,4 +99,9 @@ public class PizzaServiceImpl implements PizzaService {
 
         return pizzaMapper.toDtoList(pizzaRepository.findByPriceRangeAndSizeIdAndToppingId(minPrice, maxPrice, sizeId, toppingId));
     }
+
+    @Override
+    public List<PizzaResponse> getAllPizzasByName(String name) {
+        return pizzaMapper.toDtoList(pizzaRepository.findByNameContaining(name));
+    }
 }

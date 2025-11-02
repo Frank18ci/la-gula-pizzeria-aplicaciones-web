@@ -49,5 +49,10 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("{id}/notify")
+    public ResponseEntity<?> notifyOrder(@PathVariable Long id) {
+        orderService.notifyOrder(id);
+        return ResponseEntity.ok().build();
+    }
 
 }

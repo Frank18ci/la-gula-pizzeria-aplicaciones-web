@@ -65,9 +65,6 @@
                             <button mat-icon-button color="warn">
                                 <mat-icon>delete</mat-icon>
                             </button>
-                            <!---<button mat-icon-button>
-              <mat-icon>star</mat-icon>
-            </button>-->
                             <button mat-icon-button (click)="toggleFavorite('home')">
                                 <mat-icon [ngClass]="{ 'text-yellow-400': isFavoriteHome }">
                                     {{ isFavoriteHome ? 'star' : 'star_border' }}
@@ -92,10 +89,6 @@
                             <button mat-icon-button color="warn">
                                 <mat-icon>delete</mat-icon>
                             </button>
-
-                            <!--- <button mat-icon-button>
-              <mat-icon>star</mat-icon>
-            </button>-->
                             <button mat-icon-button (click)="toggleFavorite('work')">
                                 <mat-icon [ngClass]="{ 'text-yellow-400': isFavoriteWork }">
                                     {{ isFavoriteWork ? 'star' : 'star_border' }}

@@ -29,4 +29,10 @@ export class CustomerService {
   deleteCustomer(id: number) : Observable<void> {
     return this.http.delete<void>(`${this.path}/${id}`);
   }
+  getCustomerByIdPersonalizado(id: number) : Observable<CustomerResponse> {
+    return this.http.get<CustomerResponse>(`${this.path}/search?id=${id}`);
+  }
+  getCustomerByUserId(userId: number) : Observable<CustomerResponse> {
+    return this.http.get<CustomerResponse>(`${this.path}/user/${userId}`);
+  }
 }

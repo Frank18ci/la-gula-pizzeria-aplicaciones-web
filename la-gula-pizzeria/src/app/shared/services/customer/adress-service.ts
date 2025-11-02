@@ -17,6 +17,9 @@ export class AdressService {
   getAllAdresses() : Observable<AdressResponse[]>{
     return this.http.get<AdressResponse[]>(this.path);
   }
+  getAllAdressesByUserId(userId: number) : Observable<AdressResponse[]>{
+    return this.http.get<AdressResponse[]>(`${this.path}/user/${userId}`);
+  }
   getAdressById(id: number) : Observable<AdressResponse> {
     return this.http.get<AdressResponse>(`${this.path}/${id}`);
   }

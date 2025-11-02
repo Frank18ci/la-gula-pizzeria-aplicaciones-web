@@ -16,8 +16,8 @@ export class ToppingService {
   getAllToppings() : Observable<ToppingResponse[]> {
     return this.http.get<ToppingResponse[]>(this.path);
   }
-  getAllToppingsByName(nombre: string) : Observable<ToppingResponse[]> {
-    return this.http.get<ToppingResponse[]>(`${this.path}/search?nombre=${nombre}`);
+  getAllToppingsByName(name: string) : Observable<ToppingResponse[]> {
+    return this.http.get<ToppingResponse[]>(`${this.path}/search?name=${name}`);
   }
   getToppingById(id: number) : Observable<ToppingResponse> {
     return this.http.get<ToppingResponse>(`${this.path}/${id}`);

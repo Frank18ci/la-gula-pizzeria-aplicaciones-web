@@ -1,30 +1,34 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { OrderService } from '../../../../shared/services/ordening/order-service';
-import OrderResponse from '../../../../shared/model/payment/response/orderPaymentResponse.model';
+import PizzaResponse from '../../../../shared/model/catalog/response/pizzaResponse.model';
 import CustomerResponse from '../../../../shared/model/customer/response/customerResponse.model';
-import { CustomerService } from '../../../../shared/services/customer/customer-service';
 import orderResponse from '../../../../shared/model/ordening/response/orderResponse.model';
-import { OrderPaymentService } from '../../../../shared/services/payment/order-payment-service';
 import OrderPaymentResponse from '../../../../shared/model/payment/response/orderPaymentResponse.model';
+import { PizzaService } from '../../../../shared/services/catalog/pizza-service';
+import { CustomerService } from '../../../../shared/services/customer/customer-service';
+import { OrderService } from '../../../../shared/services/ordening/order-service';
+import { OrderPaymentService } from '../../../../shared/services/payment/order-payment-service';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.css'
 })
-export class DashboardPage implements OnInit{
+export class DashboardPage implements OnInit {
   orders: orderResponse[] = [];
   customers: CustomerResponse[] = [];
   ordersPayments: OrderPaymentResponse[] = [];
   orderCount: number = 0;
   customerCount: number = 0;
   totalRevenue: number = 0;
+  pizzas: PizzaResponse[] = [];
   constructor(
     private orderService: OrderService,
     private customerService: CustomerService,
     private orderPaymentService: OrderPaymentService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private pizzaService: PizzaService
   ) {
 
   }
@@ -32,11 +36,25 @@ export class DashboardPage implements OnInit{
     this.loadOrders();
     this.loadCustomers();
     this.loadOrdersPayments();
+    this.loadPizzas();
+  }
+  loadPizzas(): void {
+    this.pizzaService.getAllPizzas().subscribe({
+      next: (pizzas: PizzaResponse[]) => {
+        this.pizzas = pizzas;
+        this.cdRef.markForCheck();
+      },
+      error: (error) => {
+        console.error('Error loading pizzas:', error);
+      }
+    });
   }
   loadOrders(): void {
     this.orderService.getAllOrders().subscribe({
       next: (orders: orderResponse[]) => {
         this.orders = orders;
+        orders.forEach(order => this.addOrderByStatus(order.status));
+        console.log(this.orderByStatus);
         this.orderCount = orders.length;
         this.cdRef.markForCheck();
       },
@@ -68,5 +86,20 @@ export class DashboardPage implements OnInit{
         console.error('Error loading order payments:', error);
       }
     });
+  }
+  orderByStatus: { [key: string]: number } = {
+  }
+  addOrderByStatus(status: string): void {
+    if (!this.orderByStatus[status]) {
+      this.orderByStatus[status] = 0;
+    }
+    this.orderByStatus[status]++;
+  }
+  getKeyValues(): { key: string, value: number }[] {
+    return Object.entries(this.orderByStatus).map(([key, value]) => ({ key, value }));
+  }
+  getBarWidth(value: number): number {
+    const max = Math.max(...Object.values(this.orderByStatus));
+    return Math.min((value / max) * 100, 100);
   }
 }

@@ -16,4 +16,6 @@ public interface OrderService {
     OrderResponse updateOrder(Long id, OrderRequest orderRequest);
     
     void deleteOrder(Long id);
+
+    void notifyOrder(Long id);
 }

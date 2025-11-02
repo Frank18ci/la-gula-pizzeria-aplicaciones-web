@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import UserRequest from '../../../../shared/model/user/request/userRequest.model';
 import { AuthService } from '../../../../shared/services/auth/auth-service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register-page',
@@ -10,7 +11,7 @@ import { AuthService } from '../../../../shared/services/auth/auth-service';
   templateUrl: './register-page.html',
   styleUrl: './register-page.css'
 })
-export class RegisterPage implements OnInit{
+export class RegisterPage implements OnInit {
   form!: FormGroup;
   userRequest: UserRequest = {
     email: '',
@@ -22,8 +23,9 @@ export class RegisterPage implements OnInit{
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService
-  ){
+    private authService: AuthService,
+    private toastr: ToastrService
+  ) {
 
   }
   ngOnInit(): void {
@@ -34,20 +36,22 @@ export class RegisterPage implements OnInit{
     });
   }
   register(): void {
-    if (this.form.valid) {
-      this.userRequest = { ...this.form.value };
-      this.userRequest.status = 'ACTIVE';
-      this.userRequest.phone = null;
-      this.authService.register(this.userRequest).subscribe({
-        next: (response) => {
-          console.log('Registration successful', response);
-          this.router.navigate(['/auth/login']);
-        },
-        error: (error) => {
-          console.error('Registration failed', error);
-        }
-      });
+    if (this.form.invalid) {
+      this.toastr.error('Por favor, completa todos los campos requeridos', 'Error al Registrarse');
+      return;
     }
+    this.userRequest = { ...this.form.value };
+    this.userRequest.status = 'ACTIVE';
+    this.userRequest.phone = null;
+    this.authService.register(this.userRequest).subscribe({
+      next: (response) => {
+        console.log('Registration successful', response);
+        this.router.navigate(['/auth/login']);
+      },
+      error: (error) => {
+        console.error('Registration failed', error);
+      }
+    });
   }
 
 

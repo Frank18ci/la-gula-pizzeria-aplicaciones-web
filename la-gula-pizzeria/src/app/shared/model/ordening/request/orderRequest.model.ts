@@ -1,7 +1,7 @@
 export default interface orderRequest {
     orderNumber: string;
     customerId: number;
-    addressId: number;
+    addressId?: number;
     status: OrderStatus;
     deliveryMethod: DeliveryMethod;
     notes: string;

@@ -16,6 +16,9 @@ export class OrderService {
   getAllOrders() : Observable<orderResponse[]> {
     return this.http.get<orderResponse[]>(this.path);
   }
+  notifyOrder(id: number): Observable<void> {
+    return this.http.get<void>(`${this.path}/${id}/notify`);
+  }
   getOrderById(id: number) : Observable<orderResponse> {
     return this.http.get<orderResponse>(`${this.path}/${id}`);
   }
