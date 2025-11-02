@@ -58,4 +58,9 @@ public class AddressServiceImpl implements AddressService {
         );
         addressRepository.delete(addressFund);
     }
+
+    @Override
+    public List<AddressResponse> getAddressesByUserId(Long id) {
+        return addressMapper.toDtoList(addressRepository.findByCustomer_UserId(id));
+    }
 }

@@ -13,6 +13,7 @@ import { PizzaService } from '../../../../shared/services/catalog/pizza-service'
 import { SizeService } from '../../../../shared/services/catalog/size-service';
 import { ToppingService } from '../../../../shared/services/catalog/topping-service';
 import { RootImagePizza, RootImageTopping } from '../../../../shared/storage/RootImagen';
+import { ToastrService } from 'ngx-toastr';
 
 
 interface CheeseOption {
@@ -66,7 +67,8 @@ export class DetailsPizzaComponent implements OnInit {
     private doughService: DoughTypeService,
     private toppingService: ToppingService,
     private cdr: ChangeDetectorRef,
-    private carritoService: CarritoService
+    private carritoService: CarritoService,
+    private toastr: ToastrService
   ) { }
 
 
@@ -148,7 +150,7 @@ export class DetailsPizzaComponent implements OnInit {
       quantity: 1,
       toppings: this.selectedToppings.map(t => ({ toppingId: t.id, quantity: 1 }))
     });
-    console.log('Pizza added to cart successfully.');
+    this.toastr.info('Pizza agregada al carrito!', 'Éxito');
     console.log(this.carritoService.getCart());
   }
 

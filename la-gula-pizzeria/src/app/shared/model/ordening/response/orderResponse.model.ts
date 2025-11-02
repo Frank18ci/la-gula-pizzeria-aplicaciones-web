@@ -2,7 +2,7 @@ export default interface orderResponse {
     id: number;
     orderNumber: string;
     customerId: number;
-    addressId: number;
+    addressId?: number;
     status: string;
     deliveryMethod: string;
     notes: string;

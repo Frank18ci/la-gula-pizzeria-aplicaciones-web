@@ -13,22 +13,27 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/sizes")
 public class SizeController {
     private final SizeService sizeService;
+
     @GetMapping
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(sizeService.getSizes());
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
         return ResponseEntity.ok(sizeService.getSizeById(id));
     }
+
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid SizeRequest sizeRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(sizeService.createSize(sizeRequest));
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid SizeRequest sizeRequest) {
         return ResponseEntity.ok(sizeService.updateSize(id, sizeRequest));
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         sizeService.deleteSize(id);

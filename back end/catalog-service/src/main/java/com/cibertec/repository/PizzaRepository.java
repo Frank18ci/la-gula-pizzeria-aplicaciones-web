@@ -24,4 +24,6 @@ public interface PizzaRepository extends JpaRepository<Pizza, Long> {
                                              @Param("toppingId") Long toppingId);
 
     List<Pizza> findByBasePriceBetween(BigDecimal basePriceAfter, BigDecimal basePriceBefore);
+
+    List<Pizza> findByNameContaining(String name);
 }

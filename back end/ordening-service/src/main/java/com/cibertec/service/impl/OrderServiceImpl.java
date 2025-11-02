@@ -47,34 +47,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderResponse createOrder(OrderRequest orderRequest) {
-        CustomerResponse customerResponse = customerClient.findById(orderRequest.customerId());
-        UserResponse userResponse = userClient.findById(customerResponse.userId());
+        customerClient.findById(orderRequest.customerId());
         Order order = orderRepository.save(orderMapper.toEntity(orderRequest));
-
-        orderProducer.sendOrder(
-                OrderResponseRabbit.builder()
-                        .customerName(userResponse.fullName())
-                        .customerEmail(userResponse.email())
-                        .orderStatus(orderRequest.orderNumber())
-                        .orderId(order.getId())
-                        .amount(orderRequest.total())
-                        .orderItems(order.getOrderItems().stream().map(oi ->
-                                        OrderItemResponseRabbit.builder()
-                                                .pizzaName(catalogClient.getPizzaById(oi.getPizzaId()).name())
-                                                .sizeName(catalogClient.findSizeById(oi.getSizeId()).name())
-                                                .doughTypeName(catalogClient.findDoughTypeById(oi.getDoughTypeId()).name())
-                                                .quantity(oi.getQuantity())
-                                                .orderItemToppings(oi.getToppings().stream().map(t ->
-                                                                OrderItemToppingResponseRabbit.builder()
-                                                                        .toppingName(catalogClient.findToppingById(t.getToppingId()).name())
-                                                                        .quantity(t.getQuantity())
-                                                                        .build())
-                                                        .toList())
-                                                .build())
-                                .toList())
-                        .build()
-        );
-
         return orderMapper.toDto(order);
     }
 
@@ -110,6 +84,39 @@ public class OrderServiceImpl implements OrderService {
                 () -> new RuntimeException("Order not found with id: " + id)
         );
         orderRepository.delete(orderFound);
+    }
+
+    @Override
+    public void notifyOrder(Long id) {
+        Order orderFound = orderRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Order not found with id: " + id)
+        );
+        CustomerResponse customerResponse = customerClient.findById(orderFound.getCustomerId());
+        UserResponse userResponse = userClient.findById(customerResponse.userId());
+        orderProducer.sendOrder(
+                OrderResponseRabbit.builder()
+                        .customerName(userResponse.fullName())
+                        .customerEmail(userResponse.email())
+                        .orderStatus(orderFound.getStatus().name())
+                        .orderId(orderFound.getId())
+                        .amount(orderFound.getTotal())
+                        .orderItems(orderFound.getOrderItems().stream().map(oi ->
+                                        OrderItemResponseRabbit.builder()
+                                                .pizzaName(catalogClient.getPizzaById(oi.getPizzaId()).name())
+                                                .sizeName(catalogClient.findSizeById(oi.getSizeId()).name())
+                                                .doughTypeName(catalogClient.findDoughTypeById(oi.getDoughTypeId()).name())
+                                                .quantity(oi.getQuantity())
+                                                .orderItemToppings(oi.getToppings().stream().map(t ->
+                                                                OrderItemToppingResponseRabbit.builder()
+                                                                        .toppingName(catalogClient.findToppingById(t.getToppingId()).name())
+                                                                        .quantity(t.getQuantity())
+                                                                        .build())
+                                                        .toList())
+                                                .build())
+                                .toList())
+                        .build()
+        );
+
     }
 
 

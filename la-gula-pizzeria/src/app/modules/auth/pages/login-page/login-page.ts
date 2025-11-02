@@ -33,7 +33,8 @@ export class LoginPage implements OnInit {
     this.authRequest = { ...this.form.value };
     this.authService.login(this.authRequest).subscribe({
       next: (response) => {
-        this.toastr.success('Login exitoso', 'Login');
+        this.toastr.success('Login successful', 'Login');
+        this.cookieService.delete('user');
         this.cookieService.set('user', JSON.stringify(response));
         this.router.navigate(['/application/home']);
       },

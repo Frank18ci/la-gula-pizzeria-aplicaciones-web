@@ -2,6 +2,7 @@ package com.cibertec.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cibertec.enums.DeliveryMethod;
@@ -71,5 +72,5 @@ public class Order {
 
 
     @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItems;
+    private List<OrderItem> orderItems = new ArrayList<>();
 }

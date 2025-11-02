@@ -74,4 +74,9 @@ public class ToppingServiceImpl implements ToppingService {
         );
         toppingRepository.delete(toppingFound);
     }
+
+    @Override
+    public List<ToppingResponse> searchToppingsByName(String name) {
+        return toppingMapper.toDtoList(toppingRepository.findByNameContaining(name));
+    }
 }

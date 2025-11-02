@@ -108,8 +108,17 @@ export class ClientsPage implements OnInit, AfterViewInit {
     this.buscarClientePorId(filterValue.trim().toLowerCase());
   }
   buscarClientePorId(id: string) {
-    this.customerService.getCustomerById(Number(id)).subscribe(customer => {
-      this.dataSource.data = customer ? [customer] : [];
+    if (id === '') {
+      this.loadCustomers();
+      return;
+    }
+    this.customerService.getCustomerById(Number(id)).subscribe({
+      next: (customer: CustomerResponse) => {
+        this.dataSource.data = [customer];
+      },
+      error: (error) => {
+        this.loadCustomers();
+      }
     });
   }
 }
