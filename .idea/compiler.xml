@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Annotation profile for email-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../../m2/repository/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="email-service" />
+        <module name="config-service" />
+      </profile>
+      <profile name="Annotation profile for security-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../../m2/repository/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar" />
+        </processorPath>
+        <module name="gateway-service" />
+        <module name="security-service" />
+      </profile>
+      <profile name="Annotation profile for catalog-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../../m2/repository/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
+          <entry name="$PROJECT_DIR$/../../../m2/repository/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar" />
+          <entry name="$PROJECT_DIR$/../../../m2/repository/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
+        </processorPath>
+        <module name="delivery-service" />
+        <module name="payment-service" />
+        <module name="ordening-service" />
+        <module name="users-service" />
+        <module name="customer-service" />
+        <module name="catalog-service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="catalog-service" options="-parameters" />
+      <module name="config-service" options="-parameters" />
+      <module name="customer-service" options="-parameters" />
+      <module name="delivery-service" options="-parameters" />
+      <module name="email-service" options="-parameters" />
+      <module name="gateway-service" options="-parameters" />
+      <module name="ordening-service" options="-parameters" />
+      <module name="payment-service" options="-parameters" />
+      <module name="security-service" options="-parameters" />
+      <module name="users-service" options="-parameters" />
+    </option>
+  </component>
+</project>
